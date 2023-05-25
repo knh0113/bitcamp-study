@@ -1,3 +1,0 @@
-class B {}
-class c {}
-
