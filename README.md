@@ -58,3 +58,10 @@
     - 변수 선언, 변수에 값 할당
     - Primitive Date Type 소개 : byte, short, int, long, char, float, double, boolean
   - 프로젝트 실습
+
+### 6일 (5/30, 화)
+
+- 자바 프로그래밍
+  - 표준 입출력 API 사용법(com.eomcs.lang.ex99)
+  - 변수 사용법(com.eomcs.lang.ex04)
+- v

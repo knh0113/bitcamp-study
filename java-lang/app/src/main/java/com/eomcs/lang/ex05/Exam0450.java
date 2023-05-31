@@ -4,7 +4,8 @@ package com.eomcs.lang.ex05;
 //
 public class Exam0450 {
   public static void main(String[] args) {
-    // Yes/No 또는 true/false 값을 저장할 때
+    // Yes/No 또는 true/fals
+    e 값을 저장할 때
     // 비트 연산자를 사용하면 메모리를 절약할 수 있다.
 
     // 비트 연산자 사용 전
