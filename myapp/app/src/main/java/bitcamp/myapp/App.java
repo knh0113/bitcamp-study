@@ -5,55 +5,110 @@ import java.util.Scanner;
 
 public class App {
   public static void main(String[] args) {
-    System.out.println("나의 목록 관리 시스템");
-    System.out.println("-----------------------------------");
+    printTitle();
 
     // 키보드 스캐너 준비
     Scanner scanner = new Scanner(System.in);
 
-    int[] no = new int[3];
-    String[] name = new String[3];
-    int[] age = new int[3];
-    boolean[] working = new boolean[3];
-    char[] gender = new char[3];
-    float[] leftEye = new float[3];
-    float[] rightEye = new float[3];
+    final int MAX_SIZE = 100;
+    int userId = 1;
+    int length = 0; //
 
-    for (int count = 0; count < 3; count++) { // for(1.처음, )
+    int[] no = new int[MAX_SIZE];
+    String[] name = new String[MAX_SIZE];
+    String[] email = new String[MAX_SIZE];
+    String[] password = new String[MAX_SIZE];
+    char[] gender = new char[MAX_SIZE];
 
-      System.out.print("번호? : ");
-      no[count] = scanner.nextInt();
+    // 회원정보 등록
+    for (int i = 0; i < MAX_SIZE; i++) { // for(1.처음, )
 
-      System.out.print("이름? : ");
-      name[count] = scanner.next();
+      inputMember(scanner, i, name, email, password, gender, no, userId++);
 
-      System.out.print("나이? : ");
-      age[count] = scanner.nextInt();
+      length++;
 
-      System.out.print("재직 여부? : ");
-      working[count] = scanner.nextBoolean();
-
-      System.out.print("성별? : ");
-      String str = scanner.next();
-      gender[count] = str.charAt(0);
-
-      System.out.print("좌우시력? : ");
-      leftEye[count] = scanner.nextFloat();
-      rightEye[count] = scanner.nextFloat();
-
-      // count++; // = count += +1;// = count = count +1;
-
+      if (!promptContinue(scanner)) {
+        break;
+      }
     }
 
     System.out.println("---------------------------------");
 
-    for (int count = 0; count < 3; count++) {
-      System.out.printf("번호 : %d\n", no[count]);
-      System.out.printf("이름: %s\n", name[count]); // s : 문자열
-      System.out.printf("나이: %d\n", age[count]);
-      System.out.printf("재직자: %b\n", working[count]); // 출력후 줄바꿈, \n : escape character
-      System.out.printf("성벌(남자(M), 여자(W)): %c\n", gender[count]); // c: 문자(문자열이랑 다름)
-      System.out.printf("좌우시력: %f,%f\n", leftEye[count], rightEye[count]);
+    System.out.println("번호, 이름, 이메일, 성별");
+    System.out.println("---------------------------------");
+
+    for (int i = 0; i < length; i++) { // 작성한 번ㅆ까지만 출력하기 위함
+      System.out.printf("%d, %s, %s, %c\n", no[i], name[i], email[i], gender[i]);
     }
+    scanner.close();
+  }
+
+  static void printTitle() {
+    System.out.println("나의 목록 관리 시스템");
+    System.out.println("-----------------------------------");
+  }
+
+  static void inputMember(Scanner scanner, int i,
+      String[] name, String[] email, String[] password, char[] gender, int[] no, int userId) {
+
+
+      System.out.print("이름? : ");
+      name[i] = scanner.next();
+
+      System.out.print("이메일? : ");
+      email[i] = scanner.next();
+
+      System.out.print("암호? : ");
+      password[i] = scanner.next();
+
+      loop: while (true) {                  //loop라고 라벨링해줌
+        System.out.println("성별? : ");
+        System.out.println(" 1. 남자");
+        System.out.println(" 2. 여자");
+        System.out.print("> ");
+        String menuNo = scanner.next();
+        scanner.nextLine(); // 입력 값(token)을 읽고 난 후에 남아 있는 줄버꿈 코드를 제거한다.
+        
+      //   if (menuNo.equals("1")) {
+      //     gender[i] = 'M';
+      //     break;
+      //   } else if (menuNo.equals("2")) {
+      //     gender[i] = 'W';
+      //     break;
+      //   } else {
+      //     System.out.println("무효한 번호입니다.");
+      //   }
+      // }
+
+      switch (menuNo) {
+        case "1":
+          gender[i] = 'M';
+          break loop;
+        case "2":
+          gender[i] = 'W';
+          break loop;
+        default:
+          System.out.println("무효한 번호입니다.");
+      }
+      // while (true) : 무한 루프 맞을때까지
+      // String str = scanner.next();
+      // gender[i] = str.charAt(0);
+      // scanner.next()로 문자열이 str로 저장되고 charAt(0)에 의해 0번째 문자가 출력되어 gender[i]에 저장된다.
+      // gender[i] = scanner.next().charAt(0);
+
+      // count++; // = count += +1;// = count = count +1;
+      
+    }
+    no[i] = userId++;
+  }
+
+  static boolean promptContinue(Scanner scanner) {
+    System.out.print("계속하시겠습니까?(Y/n)");
+    // scanner.nextLine(); // 이전 next()를 실행한 후 남아 있던 줄바꿈 코드를 제거한다.
+    String response = scanner.nextLine();
+    if (!response.equals("") && !response.equalsIgnoreCase("Y")) {
+      return false;
+    }
+    return true;
   }
 }

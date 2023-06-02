@@ -5,6 +5,7 @@ package com.eomcs.lang.ex05;
 public class Exam0680 {
   public static void main(String[] args) {
     int i = 2;
+    
     int result = ++i + ++i * ++i;
     // 위의 문장은 다음 문장들로 변경된다.
     // i = i + 1;
