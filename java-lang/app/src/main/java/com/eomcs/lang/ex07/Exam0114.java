@@ -31,7 +31,7 @@ public class Exam0114 {
     keyScan.close();
 
     for (int starLen = 1; starLen <= len; starLen += 2) {
-      printSpaces(getSpaceLength(len, starLen));
+      printSpaces(getSpaceLength(len, starLen)); // 메서드 안에 메서드 : 안에 메서드 계산 후 밖 메서드에 적용
       printStars(starLen);
       System.out.println();
     }

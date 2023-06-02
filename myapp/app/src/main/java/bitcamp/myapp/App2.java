@@ -8,7 +8,7 @@ public class App2 {
   static Scanner scanner = new Scanner(System.in);
 
   static final int MAX_SIZE = 100;
-  static int[] no = new int[MAX_SIZE];
+  static int[] no = new int[MAX_SIZE];            //static 변수는 static 메소드끼리 공유가능하다!!!
   static String[] name = new String[MAX_SIZE];
   static String[] email = new String[MAX_SIZE];
   static String[] password = new String[MAX_SIZE];
@@ -23,11 +23,9 @@ public class App2 {
     printTitle();
 
     // 회원정보 등록
-    for (int i = 0; i < MAX_SIZE; i++) {
+    while (length < MAX_SIZE) {
 
-      inputMember(i);
-
-      length++;
+      inputMember();
 
       if (!promptContinue()) {
         break;
@@ -44,16 +42,16 @@ public class App2 {
     System.out.println("----------------------------------");
   }
 
-  static void inputMember(int i) {
+  static void inputMember() {
 
     System.out.print("이름? ");
-    name[i] = scanner.next();
+    name[length] = scanner.next();
 
     System.out.print("이메일? ");
-    email[i] = scanner.next();
+    email[length] = scanner.next();
 
     System.out.print("암호? ");
-    password[i] = scanner.next();
+    password[length] = scanner.next();
 
     loop: while (true) {
       System.out.println("성별: ");
@@ -65,17 +63,17 @@ public class App2 {
 
       switch (menuNo) {
         case "1":
-          gender[i] = 'M';
+          gender[length] = 'M';
           break loop;
         case "2":
-          gender[i] = 'W';
+          gender[length] = 'W';
           break loop;
         default:
           System.out.println("무효한 번호입니다.");
       }
     }
 
-    no[i] = userId;
+    no[length] = userId;
   }
 
   static boolean promptContinue() {
@@ -99,3 +97,5 @@ public class App2 {
 
   }
 }
+
+

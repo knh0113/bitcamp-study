@@ -14,7 +14,7 @@ public class Exam0321 {
     sum = 0;
     while (count < 100) {
       count++;
-      if ((count & 1) == 0) { // count & 1 ==> count & 0x01 ==> count % 2
+      if ((count & 1) == 0) { // count & 1 ==> count & 0x01 ==> count % 2 : 맨끝 1비트 값을 추출했을때 그 값이 0
         sum += count;
       }
     }

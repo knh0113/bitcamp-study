@@ -1,7 +1,7 @@
 package com.eomcs.lang.ex06;
 
 //# 흐름 제어문 - if ~ else 문
-//
+//u
 public class Exam0140 {
   public static void main(String[] args) {
     int age = 17;
