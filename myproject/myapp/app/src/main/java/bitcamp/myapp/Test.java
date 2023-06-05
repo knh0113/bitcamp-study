@@ -4,10 +4,10 @@ package bitcamp.myapp;
 import bitcamp.util.Calculator;
 
 public class Test {
-
+  
   public static void main(String[] args) {
-    // 2 * 3 + 7 - 2 / 2
-    // -> 연산자 우선 순위를 고려하지 않고 앞에서부터 뒤로 순차적으로 계산한다.
+    // 2 * 3 + 7 - 2 / 2 = ?
+    // => 연산자 우선 순위를 고려하지 않고 앞에서부터 뒤로 순차적으로 계산한다.
 
     Calculator.init(2);
     Calculator.multiple(3);
@@ -17,4 +17,5 @@ public class Test {
     System.out.println(Calculator.result);
   }
 
+  
 }
