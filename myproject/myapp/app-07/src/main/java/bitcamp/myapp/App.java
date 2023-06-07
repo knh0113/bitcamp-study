@@ -12,41 +12,41 @@ public class App {
 
     int[] no = new int[MAX_SIZE];
     String[] name = new String[MAX_SIZE];
-    String[] email = new String[MAX_SIZE];
-    String[] password = new String[MAX_SIZE];
+    int[] age = new int[MAX_SIZE];
+    int[] weight = new int[MAX_SIZE];
     char[] gender = new char[MAX_SIZE];
 
     printTitle();
 
     for (int i = 0; i < MAX_SIZE; i++) {
-      inputMember(scanner, i, name, email, password, gender, no, userId++);
+      inputMember(scanner, i, name, age, weight, gender, no, userId++);
       length++;
       if (!promptContinue(scanner)) {
         break;
       }
     }
 
-    printMembers(length, no, name, email, gender);
+    printMembers(length, no, name, age, weight, gender);
 
     scanner.close();
   }
 
   static void printTitle() {
-    System.out.println("나의 목록 관리 시스템");
+    System.out.println("병원 접수 시스템");
     System.out.println("----------------------------------");
   }
 
   static void inputMember(Scanner scanner, int i,
-      String[] name, String[] email, String[] password, char[] gender, int[] no, int userId) {
+      String[] name, int[] age, int[] weight, char[] gender, int[] no, int userId) {
 
     System.out.print("이름? ");
     name[i] = scanner.next();
 
-    System.out.print("이메일? ");
-    email[i] = scanner.next();
+    System.out.print("나이? ");
+    age[i] = scanner.nextInt();
 
-    System.out.print("암호? ");
-    password[i] = scanner.next();
+    System.out.print("몸무게? ");
+    weight[i] = scanner.nextInt();
 
     loop: while (true) {
       System.out.println("성별: ");
@@ -72,7 +72,7 @@ public class App {
   }
 
   static boolean promptContinue(Scanner scanner) {
-    System.out.print("계속 하시겠습니까?(Y/n) ");
+    System.out.print("계속 접수하시겠습니까?(Y/n) ");
     String response = scanner.nextLine();
     if (!response.equals("") && !response.equalsIgnoreCase("Y")) {
       return false;
@@ -80,13 +80,13 @@ public class App {
     return true;
   }
 
-  static void printMembers(int length, int[] no, String[] name, String[] email, char[] gender) {
+  static void printMembers(int length, int[] no, String[] name, int[] age, int[] weight, char[] gender) {
     System.out.println("---------------------------------------");
-    System.out.println("번호, 이름, 이메일, 성별");
+    System.out.println("번호, 이름, 나이, 몸무게, 성별");
     System.out.println("---------------------------------------");
 
     for (int i = 0; i < length; i++) {
-      System.out.printf("%d, %s, %s, %c\n", no[i], name[i], email[i], gender[i]);
+      System.out.printf("%d, %s, %d, %d, %c\n", no[i], name[i], age[i], weight[i], gender[i]);
     }
   }
 }

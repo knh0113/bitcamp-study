@@ -22,7 +22,7 @@ public class App {
   }
 
   static void printTitle() {
-    System.out.println("나의 목록 관리 시스템");
+    System.out.println("병원 접수 시스템");
     System.out.println("----------------------------------");
   }
 

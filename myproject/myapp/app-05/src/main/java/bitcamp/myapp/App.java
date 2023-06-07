@@ -16,14 +16,11 @@ public class App {
     int[] no = new int[SIZE];
     String[] name = new String[SIZE];
     int[] age = new int[SIZE];
-    boolean[] working = new boolean[SIZE];
+    int[] weight = new int[SIZE];
     char[] gender = new char[SIZE];
-    float[] leftEye = new float[SIZE];
-    float[] rightEye = new float[SIZE];
+  
 
     for (int i = 0; i < SIZE; i++) {
-      System.out.print("번호? ");
-      no[i] = scanner.nextInt();
 
       System.out.print("이름? ");
       name[i] = scanner.next();
@@ -31,27 +28,21 @@ public class App {
       System.out.print("나이? ");
       age[i] = scanner.nextInt();
 
-      System.out.print("재직중(true/false)? ");
-      working[i] = scanner.nextBoolean();
+      System.out.print("몸무게? ");
+      weight[i] = scanner.nextInt();
 
       System.out.print("성별(남자:M, 여자:W)? ");
       String str = scanner.next();
       gender[i] = str.charAt(0);
-
-      System.out.print("시력(왼쪽, 오른쪽)? ");
-      leftEye[i] = scanner.nextFloat();
-      rightEye[i] = scanner.nextFloat();
     }
 
     System.out.println("---------------------------------------");
 
     for (int i = 0; i < SIZE; i++) {
-      System.out.printf("번호: %d\n", no[i]);
       System.out.printf("이름: %s\n", name[i]);
       System.out.printf("나이: %d\n", age[i]);
-      System.out.printf("재직자: %b\n", working[i]);
+      System.out.printf("몸무게: %d\n", weight[i]);
       System.out.printf("성별(남자(M), 여자(W)): %c\n", gender[i]);
-      System.out.printf("좌우시력: %.1f,%.1f\n", leftEye[i], rightEye[i]);
     }
     scanner.close();
   }

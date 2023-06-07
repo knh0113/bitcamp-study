@@ -13,10 +13,9 @@ public class App {
 
     int[] no = new int[SIZE];
     String[] name = new String[SIZE];
-    String[] email = new String[SIZE];
-    String[] password = new String[SIZE];
-    char[] gender = new char[SIZE];
-  
+    int[] age = new int[SIZE];
+    int[] weight = new int[SIZE];
+    char[] gender = new char[SIZE]; 
     
 
  
@@ -26,7 +25,7 @@ public class App {
   no[i] = userId++;
   length++;
   
-  System.out.print("계속 하시렵니까? (Y/n)")
+  System.out.print("계속 접수하시겠습니까? (Y/n)");
   scanner.nextLine();
   String response = scanner.nextLine();
   if (!response.equals("")&&!response.equals("Y")) {
@@ -37,27 +36,26 @@ public class App {
   System.out.println("------------------------------------");
     
 for (int i = 0; i < length; i++) {
-    System.out.printf("%d %s %s %c\n ", no[i], name[i], email[i], gender[i]);
+    System.out.printf("%d %s %d %d %c\n ", no[i], name[i], age[i], weight[i], gender[i]);
   }
     scanner.close();
-  }
 }
 
 static void printTitle() {
-  System.out.println("나의 목록 관리 시스템");
+  System.out.println("병원 접수 시스템");
   System.out.println("----------------------------------");
 }
 
 static void inputMember(Scanner scanner, int i,
-    String[] name,String[] email, String[] password, char[] gender, int[] no, int userId) {
+    String[] name, int[] age, int[] weight, char[] gender, int[] no, int userId) {
   System.out.print("이름 ?");
   name[i] = scanner.next();
 
-  System.out.print("이메일 ?");
-  email[i] = scanner.next();
+  System.out.print("나이 ?");
+  age[i] = scanner.nextInt();
 
-  System.out.print("암호 ?");
-  password[i] = scanner.next();
+  System.out.print("몸무게 ?");
+  weight[i] = scanner.nextInt();
 
   // System.out.print("성별 ?");
   // String str = scanner.next();
