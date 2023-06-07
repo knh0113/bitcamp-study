@@ -18,7 +18,7 @@ public class App {
     int age = scanner.nextInt();
 
     System.out.print("몸무게? ");
-    int weight = scanner.nextInt;
+    int weight = scanner.nextInt();
 
     System.out.print("성별(남자:M, 여자:W)? ");
     String str = scanner.next();

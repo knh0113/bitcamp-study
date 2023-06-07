@@ -1,93 +1,21 @@
 package bitcamp.myapp;
-import java.util.Scanner;
 
 public class App {
   public static void main(String[] args) {
-   
+    System.out.println("병원 접수 시스템");
+    System.out.println("----------------------------------");
 
-    Scanner scanner = new Scanner(System.in);
+    int no = 100;
+    String name = "곽나현";
+    int age = 20;
+    int weight = 45;
+    char gender = 'M';
 
-    int SIZE = 3;
-    int userId = 1;
-    int length = 0;
-
-    int[] no = new int[SIZE];
-    String[] name = new String[SIZE];
-    int[] age = new int[SIZE];
-    int[] weight = new int[SIZE];
-    char[] gender = new char[SIZE]; 
+    System.out.printf("번호: %d\n", no);
+    System.out.printf("이름: %s\n", name);
+    System.out.printf("나이: %d\n", age);
+    System.out.printf("몸무게: %d\n", weight);
+    System.out.printf("성별(남자(M), 여자(W)): %c\n", gender);
     
-
- 
-   
-    
-  
-  no[i] = userId++;
-  length++;
-  
-  System.out.print("계속 접수하시겠습니까? (Y/n)");
-  scanner.nextLine();
-  String response = scanner.nextLine();
-  if (!response.equals("")&&!response.equals("Y")) {
-    break;
   }
-}
-  
-  System.out.println("------------------------------------");
-    
-for (int i = 0; i < length; i++) {
-    System.out.printf("%d %s %d %d %c\n ", no[i], name[i], age[i], weight[i], gender[i]);
-  }
-    scanner.close();
-}
-
-static void printTitle() {
-  System.out.println("병원 접수 시스템");
-  System.out.println("----------------------------------");
-}
-
-static void inputMember(Scanner scanner, int i,
-    String[] name, int[] age, int[] weight, char[] gender, int[] no, int userId) {
-  System.out.print("이름 ?");
-  name[i] = scanner.next();
-
-  System.out.print("나이 ?");
-  age[i] = scanner.nextInt();
-
-  System.out.print("몸무게 ?");
-  weight[i] = scanner.nextInt();
-
-  // System.out.print("성별 ?");
-  // String str = scanner.next();
-  // gender[i] = str.charAt(0);
-  
-  loop: while (true) {
-    System.out.println("성별 ?");
-    System.out.println(" 1. 남자");
-    System.out.println(" 2. 여자");
-    System.out.println(">");
-    String menuNo = scanner.next();
-
-    // if (menuNo.equals("1")) {
-    //   gender[i] = 'M';
-    //   break;
-    // } else if (menuNo.equals("2")) {
-    //   gender[i] = 'F';
-    //   break;
-    // } else {
-    //   System.out.println("무효한 번호입니다");
-    // }
-    switch (menuNo) {
-      case "1":
-        gender[i] = 'M';
-        break loop;
-      case "2":
-        gender[i] = 'W';
-        break loop;
-      default :
-        System.out.println("무효한 번호이다.");
-    }
-  }
-
-  no[i] = userId++;
 }
