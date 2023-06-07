@@ -36,21 +36,21 @@ public class App {
   }
 
   static void printMenu() {
-    System.out.println("1. 환자등록");
-    System.out.println("2. 환자목록");
-    System.out.println("3. 환자조회");
-    System.out.println("4. 환자변경");
-    System.out.println("5. 환자삭제");
+    System.out.println("1. 회원등록");
+    System.out.println("2. 회원목록");
+    System.out.println("3. 회원조회");
+    System.out.println("4. 회원변경");
+    System.out.println("5. 회원삭제");
     System.out.println("6. 종료");
   }
 
   static void printTitle() {
-    System.out.println("병원 접수 시스템");
+    System.out.println("나의 목록 관리 시스템");
     System.out.println("----------------------------------");
   }
 
   static boolean promptContinue() {
-    String response = Prompt.inputString("계속 접수하시겠습니까?(Y/n) ");
+    String response = Prompt.inputString("계속 하시겠습니까?(Y/n) ");
     if (!response.equals("") && !response.equalsIgnoreCase("Y")) {
       return false;
     }

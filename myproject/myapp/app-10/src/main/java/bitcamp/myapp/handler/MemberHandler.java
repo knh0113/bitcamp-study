@@ -38,7 +38,7 @@ public class MemberHandler {
 
     for (int i = 0; i < length; i++) {
       System.out.printf("%d, %s, %s, %s, %s\n", 
-        no[i], age[i], weight[i], 
+        no[i], name[i], age[i], weight[i], 
         toGenderString(gender[i]));
     }
   }
@@ -69,7 +69,7 @@ public class MemberHandler {
         name[i] = Prompt.inputString("");
         System.out.printf("나이(%s)? ", age[i]);
         age[i] = Prompt.inputString("");
-        System.out.printf("몸무게? ");
+        System.out.printf("몸무게?(%s) ", weight[i]);
         weight[i] = Prompt.inputString("");
         gender[i] = inputGender(gender[i]);
         return;
@@ -117,6 +117,8 @@ public class MemberHandler {
       age[i] = age[i + 1];
       weight[i] = weight[i + 1];
       gender[i] = gender[i + 1];
+
+      
     }
 
     no[length - 1] = 0;

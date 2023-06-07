@@ -7,8 +7,8 @@ public class MemberHandler {
   static final int MAX_SIZE = 100;
   static int[] no = new int[MAX_SIZE];
   static String[] name = new String[MAX_SIZE];
-  static String[] age = new String[MAX_SIZE];
-  static String[] weight = new String[MAX_SIZE];
+  static String[] email = new String[MAX_SIZE];
+  static String[] password = new String[MAX_SIZE];
   static char[] gender = new char[MAX_SIZE];
   static int userId = 1;
   static int length = 0;
@@ -23,9 +23,9 @@ public class MemberHandler {
     }
 
     name[length] = Prompt.inputString("이름? ");
-    age[length] = Prompt.inputString("나이? ");
-    weight[length] = Prompt.inputString("몸무게? ");
-    gender[length] = inputGender((char)0);
+    email[length] = Prompt.inputString("이메일? ");
+    password[length] = Prompt.inputString("암호? ");
+    gender[length] = inputGender((char) 0);
 
     no[length] = userId++;
     length++;
@@ -33,13 +33,13 @@ public class MemberHandler {
 
   public static void printMembers() {
     System.out.println("---------------------------------------");
-    System.out.println("번호, 이름, 나이, 몸무게, 성별");
+    System.out.println("번호, 이름, 이메일, 성별");
     System.out.println("---------------------------------------");
 
     for (int i = 0; i < length; i++) {
-      System.out.printf("%d, %s, %s, %s, %s\n", 
-        no[i], age[i], weight[i], 
-        toGenderString(gender[i]));
+      System.out.printf("%d, %s, %s, %s\n",
+          no[i], name[i], email[i],
+          toGenderString(gender[i]));
     }
   }
 
@@ -48,8 +48,7 @@ public class MemberHandler {
     for (int i = 0; i < length; i++) {
       if (no[i] == Integer.parseInt(memberNo)) {
         System.out.printf("이름: %s\n", name[i]);
-        System.out.printf("나이: %s\n", age[i]);
-        System.out.printf("몸무게: %s\n", weight[i]);
+        System.out.printf("이메일: %s\n", email[i]);
         System.out.printf("성별: %s\n", toGenderString(gender[i]));
         return;
       }
@@ -67,10 +66,10 @@ public class MemberHandler {
       if (no[i] == Integer.parseInt(memberNo)) {
         System.out.printf("이름(%s)? ", name[i]);
         name[i] = Prompt.inputString("");
-        System.out.printf("나이(%s)? ", age[i]);
-        age[i] = Prompt.inputString("");
-        System.out.printf("몸무게? ");
-        weight[i] = Prompt.inputString("");
+        System.out.printf("이메일(%s)? ", email[i]);
+        email[i] = Prompt.inputString("");
+        System.out.printf("새암호? ");
+        password[i] = Prompt.inputString("");
         gender[i] = inputGender(gender[i]);
         return;
       }
@@ -86,10 +85,10 @@ public class MemberHandler {
       label = String.format("성별(%s)?\n", toGenderString(gender));
     }
     loop: while (true) {
-      String menuNo = Prompt.inputString(label + 
-      "  1. 남자\n" + 
-      "  2. 여자\n" + 
-      "> ");
+      String menuNo = Prompt.inputString(label +
+          "  1. 남자\n" +
+          "  2. 여자\n" +
+          "> ");
 
       switch (menuNo) {
         case "1":
@@ -102,42 +101,27 @@ public class MemberHandler {
     }
   }
 
-  public static void deleteMember() {
-    int memberNo = Prompt.inputInt("번호? ");
-
-    int deletedIndex = indexOf(memberNo);
-    if (deletedIndex == -1) {
-      System.out.println("해당 번호의 회원이 없습니다!");
-      return;
-    }
-
-    for (int i = deletedIndex; i < length - 1; i++) {
-      no[i] = no[i + 1];
-      name[i] = name[i + 1];
-      age[i] = age[i + 1];
-      weight[i] = weight[i + 1];
-      gender[i] = gender[i + 1];
-    }
-
-    no[length - 1] = 0;
-    name[length - 1] = null;
-    age[length - 1] = null;
-    weight[length - 1] = null;
-    gender[length - 1] = (char) 0;
-
-    length--;
-  }
-
-  private static int indexOf(int memberNo) {
-    for (int i = 0; i < length; i++) {
-      if (no[i] == memberNo) {
-        return i;
-      }
-    }
-    return -1;
-  }
-
   private static boolean available() {
     return length < MAX_SIZE;
   }
+
+  public static void deleteMember() {
+    String memberNo = Prompt.inputString("번호? ");
+    for (int i = 0; i < length; i++) {
+      if (no[i] == Integer.parseInt(memberNo)) {
+        for (int j = i; j < length - 1; j++) {
+          no[j] = no[j + 1];
+          name[j] = name[j + 1];
+          email[j] = email[j + 1];
+          password[j] = password[j + 1];
+          gender[j] = gender[j + 1];
+        }
+        length--;
+        System.out.println("회원을 삭제하였습니다.");
+        return;
+      }
+    }
+    System.out.println("해당 번호의 회원이 없습니다!");
+  }
+
 }
