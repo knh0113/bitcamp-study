@@ -7,8 +7,8 @@ public class MemberHandler {
   static final int MAX_SIZE = 100;
   static int[] no = new int[MAX_SIZE];
   static String[] name = new String[MAX_SIZE];
-  static int[] age = new int[MAX_SIZE];
-  static int[] weight = new int[MAX_SIZE];
+  static String[] age = new String[MAX_SIZE];
+  static String[] weight = new String[MAX_SIZE];
   static char[] gender = new char[MAX_SIZE];
   static int userId = 1;
   static int length = 0;
@@ -18,8 +18,8 @@ public class MemberHandler {
 
   public static void inputMember() {
     name[length] = Prompt.inputString("이름? ");
-    age[length] = Prompt.inputInt("나이? ");
-    weight[length] = Prompt.inputInt("몸무게? ");
+    age[length] = Prompt.inputString("나이? ");
+    weight[length] = Prompt.inputString("몸무게? ");
 
     loop: while (true) {
       String menuNo = Prompt.inputString("성별:\n" + 
@@ -49,7 +49,7 @@ public class MemberHandler {
     System.out.println("---------------------------------------");
 
     for (int i = 0; i < length; i++) {
-      System.out.printf("%d, %s, %d, %d, %c\n", no[i], name[i], age[i], weight[i], gender[i]);
+      System.out.printf("%d, %s, %s, %s, %c\n", no[i], name[i], age[i], weight[i], gender[i]);
     }
   }
 
