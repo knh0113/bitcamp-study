@@ -43,6 +43,7 @@ public class app {
 
   }
 
+  // 팩토리 메서드
   static Score creatScore(String name, int kor, int eng, int math) {
     Score s = new Score();
     s.name = name;
