@@ -16,7 +16,7 @@ public class StudentSelector {
       Thread.sleep(200);
     }
     System.out.println();
-
+d
     int selectedIndex = (int)(Math.random() * names.length);
     System.out.println("축 당첨!");
     Thread.sleep(3000);
