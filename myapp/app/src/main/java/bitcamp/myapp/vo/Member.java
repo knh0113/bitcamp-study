@@ -7,44 +7,49 @@ public class Member {
   private String password;
   private char gender;
 
-  public int getNo() {
-    return this.no;
+  public Member(int a) {
+
   }
 
-  public int setNo(int no) {
+  public int getNo() {
+    return no;
+  }
+
+  public void setNo(int no) {
     this.no = no;
   }
 
   public String getName() {
-    return this.name;
+    return name;
   }
 
-  public String setName(String name) {
+  public void setName(String name) {
     this.name = name;
   }
 
   public String getEmail() {
-    return this.email;
+    return email;
   }
 
-  public String setEmail(String email) {
+  public void setEmail(String email) {
     this.email = email;
   }
 
   public String getPassword() {
-    return this.password;
+    return password;
   }
 
-  public String setPassword(String password) {
+  public void setPassword(String password) {
     this.password = password;
   }
 
-  public String getGender() {
-    return this.gender;
+  public char getGender() {
+    return gender;
   }
 
-  public char setGender(String gender) {
+  public void setGender(char gender) {
     this.gender = gender;
   }
+
 
 }
