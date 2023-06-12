@@ -1,17 +1,15 @@
 package bitcamp.myapp.handler;
 
-import bitcamp.util.Prompt;
 import bitcamp.myapp.vo.Member;
+import bitcamp.util.Prompt;
 
 public class MemberHandler {
 
   static final int MAX_SIZE = 100;
   static Member[] members = new Member[MAX_SIZE];
-  static int userId = 1;
+
   static int length = 0;
 
-  static final char MALE = 'M';
-  static final char FEMALE = 'W';
 
   public static void inputMember() {
     if (!available()) {
@@ -20,13 +18,13 @@ public class MemberHandler {
     }
 
     Member m = new Member();
-    m.name = Prompt.inputString("이름? ");
-    m.age = Prompt.inputString("나이? ");
-    m.weight = Prompt.inputString("몸무게? ");
-    m.gender = inputGender((char)0);
-    m.no = userId++;
+    m.setName(Prompt.inputString("이름? "));
+    m.setAge(Prompt.inputString("나이? "));
+    m.setWeight(Prompt.inputString("몸무게? "));
+    m.setGender(inputGender((char) 0));
 
-    // 위에서 만든 Member 인스턴스의 주소를 잃어버리지 않게 
+
+    // 위에서 만든 Member 인스턴스의 주소를 잃어버리지 않게
     // 레퍼런스 배열에 담는다.
     members[length++] = m;
   }
@@ -38,9 +36,8 @@ public class MemberHandler {
 
     for (int i = 0; i < length; i++) {
       Member m = members[i];
-      System.out.printf("%d, %s, %s, %s, %s\n", 
-        m.no, m.name, m.age, m.weight, 
-        toGenderString(m.gender));
+      System.out.printf("%d, %s, %s, %s, %s\n", m.getNo(), m.getName(), m.getAge(), m.getWeight(),
+          toGenderString(m.getGender()));
     }
   }
 
@@ -48,11 +45,11 @@ public class MemberHandler {
     String memberNo = Prompt.inputString("번호? ");
     for (int i = 0; i < length; i++) {
       Member m = members[i];
-      if (m.no == Integer.parseInt(memberNo)) {
-        System.out.printf("이름: %s\n", m.name);
-        System.out.printf("나이: %s\n", m.age);
-        System.out.printf("몸무게: %s\n", m.weight);
-        System.out.printf("성별: %s\n", toGenderString(m.gender));
+      if (m.getNo() == Integer.parseInt(memberNo)) {
+        System.out.printf("이름: %s\n", m.getName());
+        System.out.printf("나이: %s\n", m.getAge());
+        System.out.printf("몸무게: %s\n", m.getWeight());
+        System.out.printf("성별: %s\n", toGenderString(m.getGender()));
         return;
       }
     }
@@ -67,14 +64,14 @@ public class MemberHandler {
     String memberNo = Prompt.inputString("번호? ");
     for (int i = 0; i < length; i++) {
       Member m = members[i];
-      if (m.no == Integer.parseInt(memberNo)) {
-        System.out.printf("이름(%s)? ", m.name);
-        m.name = Prompt.inputString("");
-        System.out.printf("나이(%s)? ", m.age);
-        m.age = Prompt.inputString("");
-        System.out.printf("몸무게(%s)? ", m.weight);
-        m.weight = Prompt.inputString("");
-        m.gender = inputGender(m.gender);
+      if (m.getNo() == Integer.parseInt(memberNo)) {
+        System.out.printf("이름(%s)? ", m.getName());
+        m.setName(Prompt.inputString(""));
+        System.out.printf("나이(%s)? ", m.getAge());
+        m.setAge(Prompt.inputString(""));
+        System.out.printf("몸무게(%s)? ", m.getWeight());
+        m.setWeight(Prompt.inputString(""));
+        m.setGender(inputGender(m.getGender()));
         return;
       }
     }
@@ -88,17 +85,14 @@ public class MemberHandler {
     } else {
       label = String.format("성별(%s)?\n", toGenderString(gender));
     }
-    loop: while (true) {
-      String menuNo = Prompt.inputString(label + 
-      "  1. 남자\n" + 
-      "  2. 여자\n" + 
-      "> ");
+    while (true) {
+      String menuNo = Prompt.inputString(label + "  1. 남자\n" + "  2. 여자\n" + "> ");
 
       switch (menuNo) {
         case "1":
-          return MALE;
+          return Member.MALE;
         case "2":
-          return FEMALE;
+          return Member.FEMALE;
         default:
           System.out.println("무효한 번호입니다.");
       }
@@ -124,7 +118,7 @@ public class MemberHandler {
   private static int indexOf(int memberNo) {
     for (int i = 0; i < length; i++) {
       Member m = members[i];
-      if (m.no == memberNo) {
+      if (m.getNo() == memberNo) {
         return i;
       }
     }
