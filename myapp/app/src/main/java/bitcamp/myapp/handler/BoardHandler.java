@@ -1,5 +1,6 @@
 package bitcamp.myapp.handler;
 
+import java.util.Date;
 import bitcamp.myapp.vo.Board;
 import bitcamp.util.Prompt;
 
@@ -65,17 +66,19 @@ public class BoardHandler {
     // }
     // }
     // System.out.println("해당 번호의 회원이 없습니다!");
-    // String boardTitle = Prompt.inputString("번호? ");
-    // for (int i = 0; i < length; i++) {
-    // Board board = boards[i];
-    // if (board.getNo() == Integer.parseInt(board.getNo)) {
-    // System.out.printf("제목: %s\n", m.getName());
-    // System.out.printf("내용: %s\n", m.getEmail());
-    // System.out.printf(": %s\n", toGenderString(m.getGender()));
-    // return;
-    // }
-    // }
-    // System.out.println("해당 번호의 회원이 없습니다!");
+    String boardTitle = Prompt.inputString("번호? ");
+    for (int i = 0; i < length; i++) {
+      Board board = boards[i];
+      Date date = new Date(board.getCreatedDate());
+      if (board.getNo() == Integer.parseInt(boardTitle)) {
+        System.out.printf("제목: %s\n", board.getTitle());
+        System.out.printf("작성자: %s\n", board.getWriter());
+        System.out.printf("조회수: %d\n", board.getViewCount());
+        System.out.printf("등록일: %tY-%tm-%td\n", date, date, date);
+        return;
+      }
+    }
+    System.out.println("해당 번호의 게시물이 없습니다!");
   }
 
 
@@ -95,6 +98,23 @@ public class BoardHandler {
     // return;
     // }
     // }System.out.println("해당 번호의 회원이 없습니다!");
+    String boardTitle = Prompt.inputString("번호? ");
+    for (int i = 0; i < length; i++) {
+      Board board = boards[i];
+      if (board.getNo() == Integer.parseInt(boardTitle)) {
+        System.out.printf("제목(%s)? ", board.getTitle());
+        board.setTitle(Prompt.inputString(""));
+        System.out.printf("작성자(%s)? ", board.getWriter());
+        board.setWriter(Prompt.inputString(""));
+        System.out.printf("조회수(%d)? ", board.getViewCount());
+        board.setViewCount(Prompt.inputInt(""));
+        System.out.printf("새암호? ");
+        board.setPassword(Prompt.inputString(""));
+        return;
+      }
+    }
+    System.out.println("해당 번호의 게시물이 없습니다!");
+
 
   }
 
@@ -114,12 +134,25 @@ public class BoardHandler {
     // }
     //
     // boards[--length] = null;
+    int boardTitle = Prompt.inputInt("번호? ");
+
+    int deletedIndex = indexOf(boardTitle);
+    if (deletedIndex == -1) {
+      System.out.println("해당 번호의 게시물이 없습니다!");
+      return;
+    }
+
+    for (int i = deletedIndex; i < length - 1; i++) {
+      boards[i] = boards[i + 1];
+    }
+
+    boards[--length] = null;
   }
 
-  private static int indexOf(int memberNo) {
+  private static int indexOf(int boardTitle) {
     for (int i = 0; i < length; i++) {
-      Board m = boards[i];
-      if (m.getNo() == memberNo) {
+      Board board = boards[i];
+      if (board.getNo() == boardTitle) {
         return i;
       }
     }
