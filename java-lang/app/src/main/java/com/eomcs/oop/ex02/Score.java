@@ -14,3 +14,5 @@ class Score {
     this.aver = (float) this.sum / 3;
   }
 }
+
+
