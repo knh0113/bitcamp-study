@@ -65,10 +65,10 @@ public class BoardHandler {
     // }
     // }
     // System.out.println("해당 번호의 회원이 없습니다!");
-    String boardTitle = Prompt.inputString("번호? ");
+    String boardNo = Prompt.inputString("번호? ");
     for (int i = 0; i < length; i++) {
       Board board = boards[i];
-      if (board.getNo() == Integer.parseInt(boardTitle)) {
+      if (board.getNo() == Integer.parseInt(boardNo)) {
         System.out.printf("제목: %s\n", board.getTitle());
         System.out.printf("내용: %s\n", board.getContent());
         System.out.printf("작성자: %s\n", board.getWriter());
