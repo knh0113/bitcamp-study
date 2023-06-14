@@ -118,6 +118,7 @@ public class MemberHandler {
     }
 
     this.members[--this.length] = null;
+
   }
 
   private int indexOf(int memberNo) {
