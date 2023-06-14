@@ -72,6 +72,7 @@ public class BoardHandler {
       Date date = new Date(board.getCreatedDate());
       if (board.getNo() == Integer.parseInt(boardTitle)) {
         System.out.printf("제목: %s\n", board.getTitle());
+        System.out.printf("내용: %s\n", board.getContent());
         System.out.printf("작성자: %s\n", board.getWriter());
         System.out.printf("조회수: %d\n", board.getViewCount());
         System.out.printf("등록일: %tY-%tm-%td\n", date, date, date);
