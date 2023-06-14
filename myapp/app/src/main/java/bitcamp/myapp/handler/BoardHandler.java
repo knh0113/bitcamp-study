@@ -29,15 +29,6 @@ public class BoardHandler {
   }
 
   public static void printBoards() {
-    // System.out.println("---------------------------------------");
-    // System.out.println("번호, 이름, 이메일, 성별");
-    // System.out.println("---------------------------------------");
-    //
-    // for (int i = 0; i < length; i++) {
-    // Board m = boards[i];
-    // System.out.printf("%d, %s, %s, %s\n", m.getNo(), m.getName(), m.getEmail(),
-    // toGenderString(m.getGender()));
-    // }
     System.out.println("---------------------------------------");
     System.out.println("번호, 제목, 작성자, 조회수, 등록일");
     System.out.println("---------------------------------------");
@@ -54,17 +45,6 @@ public class BoardHandler {
   }
 
   public static void viewBoard() {
-    // String memberNo = Prompt.inputString("번호? ");
-    // for (int i = 0; i < length; i++) {
-    // Board m = boards[i];
-    // if (m.getNo() == Integer.parseInt(memberNo)) {
-    // System.out.printf("이름: %s\n", m.getName());
-    // System.out.printf("이메일: %s\n", m.getEmail());
-    // System.out.printf("성별: %s\n", toGenderString(m.getGender()));
-    // return;
-    // }
-    // }
-    // System.out.println("해당 번호의 회원이 없습니다!");
     String boardNo = Prompt.inputString("번호? ");
     for (int i = 0; i < length; i++) {
       Board board = boards[i];
@@ -74,6 +54,7 @@ public class BoardHandler {
         System.out.printf("작성자: %s\n", board.getWriter());
         System.out.printf("조회수: %d\n", board.getViewCount());
         System.out.printf("등록일: %tY-%1$tm-%1$td\n", board.getCreatedDate());
+        board.setViewCount(board.getViewCount() + 1);
         return;
       }
     }
@@ -83,32 +64,16 @@ public class BoardHandler {
 
 
   public static void updateBoard() {
-    // String memberNo = Prompt.inputString("번호? ");
-    // for (int i = 0; i < length; i++) {
-    // Board m = boards[i];
-    // if (m.getNo() == Integer.parseInt(memberNo)) {
-    // System.out.printf("이름(%s)? ", m.getName());
-    // m.setName(Prompt.inputString(""));
-    // System.out.printf("이메일(%s)? ", m.getEmail());
-    // m.setEmail(Prompt.inputString(""));
-    // System.out.printf("새암호? ");
-    // m.setPassword(Prompt.inputString(""));
-    // m.setGender(inputGender(m.getGender()));
-    // return;
-    // }
-    // }System.out.println("해당 번호의 회원이 없습니다!");
-    String boardTitle = Prompt.inputString("번호? ");
+    String boardNo = Prompt.inputString("번호? ");
     for (int i = 0; i < length; i++) {
       Board board = boards[i];
-      if (board.getNo() == Integer.parseInt(boardTitle)) {
-        System.out.printf("제목(%s)? ", board.getTitle());
-        board.setTitle(Prompt.inputString(""));
-        System.out.printf("작성자(%s)? ", board.getWriter());
-        board.setWriter(Prompt.inputString(""));
-        System.out.printf("조회수(%d)? ", board.getViewCount());
-        board.setViewCount(Prompt.inputInt(""));
-        System.out.printf("새암호? ");
-        board.setPassword(Prompt.inputString(""));
+      if (board.getNo() == Integer.parseInt(boardNo)) {
+        if (!Prompt.inputString("암호? ").equals(board.getPassword())) {
+          System.out.println("암호가 일치하지 않습니다!");
+          return;
+        }
+        board.setTitle(Prompt.inputString("제목(%s)? ", board.getTitle()));
+        board.setContent(Prompt.inputString("내용(%s)? ", board.getContent()));
         return;
       }
     }
@@ -120,22 +85,7 @@ public class BoardHandler {
 
 
   public static void deleteBoard() {
-    // int memberNo = Prompt.inputInt("번호? ");
-    //
-    // int deletedIndex = indexOf(memberNo);
-    // if (deletedIndex == -1) {
-    // System.out.println("해당 번호의 회원이 없습니다!");
-    // return;
-    // }
-    //
-    // for (int i = deletedIndex; i < length - 1; i++) {
-    // boards[i] = boards[i + 1];
-    // }
-    //
-    // boards[--length] = null;
-    int boardTitle = Prompt.inputInt("번호? ");
-
-    int deletedIndex = indexOf(boardTitle);
+    int deletedIndex = indexOf(Prompt.inputInt("번호? "));
     if (deletedIndex == -1) {
       System.out.println("해당 번호의 게시물이 없습니다!");
       return;
@@ -148,10 +98,10 @@ public class BoardHandler {
     boards[--length] = null;
   }
 
-  private static int indexOf(int boardTitle) {
+  private static int indexOf(int boardNo) {
     for (int i = 0; i < length; i++) {
       Board board = boards[i];
-      if (board.getNo() == boardTitle) {
+      if (board.getNo() == boardNo) {
         return i;
       }
     }
@@ -162,3 +112,5 @@ public class BoardHandler {
     return length < MAX_SIZE;
   }
 }
+
+
