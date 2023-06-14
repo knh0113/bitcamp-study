@@ -1,6 +1,5 @@
 package bitcamp.myapp.handler;
 
-import java.util.Date;
 import bitcamp.myapp.vo.Board;
 import bitcamp.util.Prompt;
 
@@ -69,13 +68,12 @@ public class BoardHandler {
     String boardTitle = Prompt.inputString("번호? ");
     for (int i = 0; i < length; i++) {
       Board board = boards[i];
-      Date date = new Date(board.getCreatedDate());
       if (board.getNo() == Integer.parseInt(boardTitle)) {
         System.out.printf("제목: %s\n", board.getTitle());
         System.out.printf("내용: %s\n", board.getContent());
         System.out.printf("작성자: %s\n", board.getWriter());
         System.out.printf("조회수: %d\n", board.getViewCount());
-        System.out.printf("등록일: %tY-%tm-%td\n", date, date, date);
+        System.out.printf("등록일: %tY-%1$tm-%1$td\n", board.getCreatedDate());
         return;
       }
     }
