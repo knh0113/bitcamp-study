@@ -12,12 +12,13 @@ public class App {
     BoardHandler boardHandler = new BoardHandler();
     BoardHandler readingHandler = new BoardHandler();
 
+    // 기본 생성자를 이영해 Prompt인스턴스를 준비한다.
+    // => 기본 생성자는 Scanner를 키보드와 연결한다.
+    Prompt prompt = new Prompt();
 
     printTitle();
 
     printMenu();
-
-
 
     while (true) {
       String menuNo = Prompt.inputString("메인> ");
