@@ -1,7 +1,6 @@
 package bitcamp.myapp;
 
 import bitcamp.myapp.handler.BoardHandler;
-import bitcamp.myapp.handler.BoardHandler2;
 import bitcamp.myapp.handler.MemberHandler;
 import bitcamp.util.Prompt;
 
@@ -9,9 +8,14 @@ public class App {
 
   public static void main(String[] args) {
 
+    BoardHandler boardHandler = new BoardHandler();
+    BoardHandler readingHandler = new BoardHandler();
+
     printTitle();
 
     printMenu();
+
+
 
     while (true) {
       String menuNo = Prompt.inputString("메인> ");
@@ -30,25 +34,25 @@ public class App {
       } else if (menuNo.equals("5")) {
         MemberHandler.deleteMember();
       } else if (menuNo.equals("6")) {
-        BoardHandler.inputBoard();
+        boardHandler.inputBoard();
       } else if (menuNo.equals("7")) {
-        BoardHandler.printBoards();
+        boardHandler.printBoards();
       } else if (menuNo.equals("8")) {
-        BoardHandler.viewBoard();
+        boardHandler.viewBoard();
       } else if (menuNo.equals("9")) {
-        BoardHandler.updateBoard();
+        boardHandler.updateBoard();
       } else if (menuNo.equals("10")) {
-        BoardHandler.deleteBoard();
+        boardHandler.deleteBoard();
       } else if (menuNo.equals("11")) {
-        BoardHandler2.inputBoard();
+        readingHandler.inputBoard();
       } else if (menuNo.equals("12")) {
-        BoardHandler2.printBoards();
+        readingHandler.printBoards();
       } else if (menuNo.equals("13")) {
-        BoardHandler2.viewBoard();
+        readingHandler.viewBoard();
       } else if (menuNo.equals("14")) {
-        BoardHandler2.updateBoard();
+        readingHandler.updateBoard();
       } else if (menuNo.equals("15")) {
-        BoardHandler2.deleteBoard();
+        readingHandler.deleteBoard();
       } else {
         System.out.println(menuNo);
       }
