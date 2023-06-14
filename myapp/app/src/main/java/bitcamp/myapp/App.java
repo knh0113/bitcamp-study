@@ -8,8 +8,10 @@ public class App {
 
   public static void main(String[] args) {
 
+    MemberHandler memberHandler = new MemberHandler();
     BoardHandler boardHandler = new BoardHandler();
     BoardHandler readingHandler = new BoardHandler();
+
 
     printTitle();
 
@@ -24,15 +26,15 @@ public class App {
       } else if (menuNo.equals("menu")) {
         printMenu();
       } else if (menuNo.equals("1")) {
-        MemberHandler.inputMember();
+        memberHandler.inputMember();
       } else if (menuNo.equals("2")) {
-        MemberHandler.printMembers();
+        memberHandler.printMembers();
       } else if (menuNo.equals("3")) {
-        MemberHandler.viewMember();
+        memberHandler.viewMember();
       } else if (menuNo.equals("4")) {
-        MemberHandler.updateMember();
+        memberHandler.updateMember();
       } else if (menuNo.equals("5")) {
-        MemberHandler.deleteMember();
+        memberHandler.deleteMember();
       } else if (menuNo.equals("6")) {
         boardHandler.inputBoard();
       } else if (menuNo.equals("7")) {
