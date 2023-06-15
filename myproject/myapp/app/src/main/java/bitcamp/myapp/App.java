@@ -10,8 +10,8 @@ public class App {
 
     Prompt prompt = new Prompt();
 
-    MemberHandler memberHandler = new MemberHandler(prompt);
-    BoardHandler boardHandler = new BoardHandler(prompt);
+    MemberHandler memberHandler = new MemberHandler(prompt, "환자");
+    BoardHandler boardHandler = new BoardHandler(prompt, "게시물");
 
     printTitle();
 
@@ -19,30 +19,14 @@ public class App {
 
     while (true) {
       String menuNo = prompt.inputString("메인> ");
-      if (menuNo.equals("99")) {
+      if (menuNo.equals("0")) {
         break;
       } else if (menuNo.equals("menu")) {
         printMenu();
       } else if (menuNo.equals("1")) {
-        memberHandler.inputMember();
+        memberHandler.execute();
       } else if (menuNo.equals("2")) {
-        memberHandler.printMembers();
-      } else if (menuNo.equals("3")) {
-        memberHandler.viewMember();
-      } else if (menuNo.equals("4")) {
-        memberHandler.updateMember();
-      } else if (menuNo.equals("5")) {
-        memberHandler.deleteMember();
-      } else if (menuNo.equals("6")) {
-        boardHandler.inputBoard();
-      } else if (menuNo.equals("7")) {
-        boardHandler.printBoards();
-      } else if (menuNo.equals("8")) {
-        boardHandler.viewBoard();
-      } else if (menuNo.equals("9")) {
-        boardHandler.updateBoard();
-      } else if (menuNo.equals("10")) {
-        boardHandler.deleteBoard();
+        boardHandler.execute();
       } else {
         System.out.println("메뉴 번호가 옳지 않습니다");
       }
@@ -52,17 +36,10 @@ public class App {
   }
 
   static void printMenu() {
-    System.out.println("1. 환자등록");
-    System.out.println("2. 환자목록");
-    System.out.println("3. 환자조회");
-    System.out.println("4. 환자변경");
-    System.out.println("5. 환자삭제");
-    System.out.println("6. 게시물등록");
-    System.out.println("7. 게시물목록");
-    System.out.println("8. 게시물조회");
-    System.out.println("9. 게시물변경");
-    System.out.println("10. 게시물삭제");
-    System.out.println("99. 종료");
+    System.out.println("1. 환자");
+    System.out.println("2. 게시물");
+    System.out.println("0. 종료");
+
   }
 
   static void printTitle() {
