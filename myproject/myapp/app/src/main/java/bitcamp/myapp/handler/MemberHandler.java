@@ -18,7 +18,6 @@ public class MemberHandler implements Handler {
 
   public void execute() {
     printMenu();
-
     while (true) {
       String menuNo = prompt.inputString("%s> ", this.title);
       if (menuNo.equals("0")) {
