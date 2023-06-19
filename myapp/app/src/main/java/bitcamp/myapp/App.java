@@ -3,22 +3,19 @@ package bitcamp.myapp;
 import bitcamp.myapp.handler.BoardHandler;
 import bitcamp.myapp.handler.Handler;
 import bitcamp.myapp.handler.MemberHandler;
+import bitcamp.util.ArrayList;
+import bitcamp.util.LinkedList;
 import bitcamp.util.Prompt;
 
 public class App {
 
   public static void main(String[] args) {
 
-    // 기본 생성자를 이용해 Prompt인스턴스를 준비한다.
-    // => 기본 생성자는 Scanner를 키보드와 연결한다.
     Prompt prompt = new Prompt();
 
-    // 모든 핸들러는 Handler 규칙에 따라 정의도었기 때문에
-    // Handler 레퍼런스에 그 주솔ㄹ 담을 수 있다.
-    Handler memberHandler = new MemberHandler(prompt, "회원");
-    Handler boardHandler = new BoardHandler(prompt, "게시글");
-    Handler readingHandler = new BoardHandler(prompt, "독서록");
-
+    Handler memberHandler = new MemberHandler(prompt, "회원", new ArrayList());
+    Handler boardHandler = new BoardHandler(prompt, "게시글", new LinkedList());
+    Handler readingHandler = new BoardHandler(prompt, "독서록", new LinkedList());
 
     printTitle();
 
@@ -27,7 +24,6 @@ public class App {
     while (true) {
       String menuNo = prompt.inputString("메인> ");
       if (menuNo.equals("0")) {
-
         break;
       } else if (menuNo.equals("menu")) {
         printMenu();
@@ -38,7 +34,7 @@ public class App {
       } else if (menuNo.equals("3")) {
         readingHandler.execute();
       } else {
-        System.out.println("메뉴 번호가 옳지 않습니다");
+        System.out.println("메뉴 번호가 옳지 않습니다!");
       }
     }
 
@@ -56,5 +52,4 @@ public class App {
     System.out.println("나의 목록 관리 시스템");
     System.out.println("----------------------------------");
   }
-
 }
