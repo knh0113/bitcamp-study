@@ -7,12 +7,15 @@ public class Queue extends LinkedList {
     q.offer("홍길동");
     q.offer("임꺽정");
     q.offer("유관순");
+    q.offer("안중근");
     q.offer("윤봉길");
 
     System.out.println(q.poll());
     System.out.println(q.poll());
     System.out.println(q.poll());
     System.out.println(q.poll());
+    System.out.println(q.poll());
+
     System.out.println(q.poll());
   }
 

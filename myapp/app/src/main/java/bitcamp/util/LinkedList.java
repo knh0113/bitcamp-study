@@ -1,5 +1,3 @@
-// 삽입과 삭제의 효율성 / 순차적인 접근보다 임의 접근에 적합/ 유연한 크기 조정/ 중간 갑입과 삭제의 용이성
-
 package bitcamp.util;
 
 
@@ -19,12 +17,12 @@ public class LinkedList implements List {
 
     print(list);
 
-    // System.out.println(list.remove(Integer.valueOf(300)));
-    // System.out.println(list.remove(Integer.valueOf(500)));
-    // System.out.println(list.remove(Integer.valueOf(100)));
-    // System.out.println(list.remove(Integer.valueOf(200)));
-    // System.out.println(list.remove(Integer.valueOf(400)));
-    // System.out.println(list.remove(Integer.valueOf(600)));
+    //    System.out.println(list.remove(Integer.valueOf(300)));
+    //    System.out.println(list.remove(Integer.valueOf(500)));
+    //    System.out.println(list.remove(Integer.valueOf(100)));
+    //    System.out.println(list.remove(Integer.valueOf(200)));
+    //    System.out.println(list.remove(Integer.valueOf(400)));
+    //    System.out.println(list.remove(Integer.valueOf(600)));
 
     System.out.println(list.remove(2));
     System.out.println(list.remove(3));
@@ -38,10 +36,10 @@ public class LinkedList implements List {
     print(list);
 
 
-    // System.out.println(list.retrieve(100));
-    // System.out.println(list.retrieve(300));
-    // System.out.println(list.retrieve(500));
-    // System.out.println(list.retrieve(600));
+    //    System.out.println(list.retrieve(100));
+    //    System.out.println(list.retrieve(300));
+    //    System.out.println(list.retrieve(500));
+    //    System.out.println(list.retrieve(600));
   }
 
   static void print(LinkedList list) {
@@ -58,8 +56,8 @@ public class LinkedList implements List {
     Node node = new Node();
     node.value = value;
 
-    if (head == null) {
-      head = node;
+    if (this.head == null) {
+      this.head = node;
     } else if (this.tail != null) {
       this.tail.next = node;
     }
@@ -105,17 +103,17 @@ public class LinkedList implements List {
     while (cursor != null) {
       if (cursor.value.equals(value)) {
         if (prev == null) {
-          head = cursor.next;
-          if (head == null) {
-            tail = null;
+          this.head = cursor.next;
+          if (this.head == null) {
+            this.tail = null;
           }
         } else if (cursor.next == null) {
-          tail = prev;
-          tail.next = null;
+          this.tail = prev;
+          this.tail.next = null;
         } else {
           prev.next = cursor.next;
         }
-        size--;
+        this.size--;
         cursor.next = null;
         cursor.value = null;
         return true;
@@ -146,17 +144,17 @@ public class LinkedList implements List {
     Object old = cursor.value;
 
     if (prev == null) {
-      head = cursor.next;
-      if (head == null) {
-        tail = null;
+      this.head = cursor.next;
+      if (this.head == null) {
+        this.tail = null;
       }
     } else if (cursor.next == null) {
-      tail = prev;
-      tail.next = null;
+      this.tail = prev;
+      this.tail.next = null;
     } else {
       prev.next = cursor.next; // 현재 커서의 다음 노드를 현재 커서의 이전 노드와 연결한다.
     }
-    size--;
+    this.size--;
     cursor.next = null;
     cursor.value = null;
 
