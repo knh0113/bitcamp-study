@@ -15,19 +15,21 @@ public class Exam0410 {
     FileInputStream in = new FileInputStream(file);
 
     // => SOI(Start of Image) Segment 읽기: 2바이트
+
     int b1 = in.read(); // 00 00 00 ff
     int b2 = in.read(); // 00 00 00 d8
     int soi = b1 << 8 | b2;
-    //   00 00 00 ff <== b1
-    //   00 00 ff 00 <== b1 << 8
+    // 00 00 00 ff <== b1
+    // 00 00 ff 00 <== b1 << 8
     // | 00 00 00 d8 <== b2
     // ------------------
-    //   00 00 ff d8
+    // 00 00 ff d8
     System.out.printf("SOI: %x\n", soi);
 
     // => JFIF-APP0 Segment Marker 읽기: 2바이트
     int jfifApp0Marker = in.read() << 8 | in.read();
     System.out.printf("JFIF APP0 Marker: %x\n", jfifApp0Marker);
+
 
     // => JFIF-APP0 Length: 2바이트
     int jfifApp0Length = in.read() << 8 | in.read();

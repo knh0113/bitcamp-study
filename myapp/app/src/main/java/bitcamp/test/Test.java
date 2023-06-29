@@ -1,6 +1,7 @@
 package bitcamp.test;
 
 public class Test {
+
   public static void main(String[] args) {
 
     System.out.println(factorial(5));
@@ -12,4 +13,5 @@ public class Test {
     }
     return factorial(value - 1) * value;
   }
+
 }
