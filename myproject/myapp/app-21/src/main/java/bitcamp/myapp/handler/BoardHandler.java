@@ -118,4 +118,14 @@ public class BoardHandler implements Handler {
       System.out.println("해당 번호의 게시글이 없습니다!");
     }
   }
+  
+    private Board findBy(int no) {
+    for (int i = 0; i < this.list.size(); i++) {
+      Board b = (Board) this.list.get(i);
+      if (b.getNo() == no) {
+        return b;
+      }
+    }
+    return null;
+  }
 }

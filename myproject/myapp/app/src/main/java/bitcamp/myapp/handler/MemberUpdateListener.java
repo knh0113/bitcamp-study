@@ -16,7 +16,7 @@ public class MemberUpdateListener extends AbstractMemberListener {
 
     Member m = this.findBy(memberNo);
     if (m == null) {
-      System.out.println("해당 번호의 회원이 없습니다!");
+      System.out.println("해당 번호의 환자가 없습니다!");
       return;
     }
 

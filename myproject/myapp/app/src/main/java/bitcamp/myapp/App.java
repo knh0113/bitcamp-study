@@ -50,7 +50,7 @@ public class App {
   }
 
   static void printTitle() {
-    System.out.println("병원 등록 시스템");
+    System.out.println("병원 관리 시스템");
     System.out.println("----------------------------------");
   }
 
@@ -77,7 +77,7 @@ public class App {
   }
 
   private void prepareMenu() {
-    MenuGroup memberMenu = new MenuGroup("회원");
+    MenuGroup memberMenu = new MenuGroup("환자");
     memberMenu.add(new Menu("등록", new MemberAddListener(memberList)));
     memberMenu.add(new Menu("목록", new MemberListListener(memberList)));
     memberMenu.add(new Menu("조회", new MemberDetailListener(memberList)));
