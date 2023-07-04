@@ -7,8 +7,8 @@ public class Exam02 {
     int[] values = {23, 7, 12, 15, 9, 2, 22, 8, 11, 25, 13, 5};
 
     // => Sorter는 BubbleSort와 QuickSort 클래스처럼
-    //    단지 정렬을 수행하는 클래스를 만들 때 일관성 있게 사용하려고
-    //    수퍼 클래스로서 정의한 것이다.
+    // 단지 정렬을 수행하는 클래스를 만들 때 일관성 있게 사용하려고
+    // 수퍼 클래스로서 정의한 것이다.
     // => Sorter 클래스를 직접 사용하려고 만든 것이 아니다.
     //
     // 따라서 다음과 같이 Sorter를 직접 사용하는 것은 아무런 의미가 없다.
@@ -27,15 +27,11 @@ public class Exam02 {
   static void display(Sorter sorter, int[] values) {
     sorter.sort(values);
 
-    for (int  value : values) {
+    for (int value : values) {
       System.out.print(value + ",");
     }
     System.out.println();
   }
 }
-
-
-
-
 
 
