@@ -11,6 +11,8 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import bitcamp.myapp.dao.MemberDao;
+import bitcamp.myapp.dao.MemberListDao;
 import bitcamp.myapp.handler.BoardAddListener;
 import bitcamp.myapp.handler.BoardDeleteListener;
 import bitcamp.myapp.handler.BoardDetailListener;
@@ -33,16 +35,16 @@ import bitcamp.util.MenuGroup;
 
 public class App {
 
+  MemberDao memberDao = new MemberListDao("member.json");
+
   ArrayList<Member> memberList = new ArrayList<>();
   LinkedList<Board> boardList = new LinkedList<>();
-  // LinkedList<Board> readingList = new LinkedList<>();
+  LinkedList<Board> readingList = new LinkedList<>();
 
   BreadcrumbPrompt prompt = new BreadcrumbPrompt();
 
-  MenuGroup mainMenu = new MenuGroup("메인");
+  prepareMenu();
 
-  public App() {
-    prepareMenu();
   }
 
   public static void main(String[] args) {
@@ -50,7 +52,7 @@ public class App {
   }
 
   static void printTitle() {
-    System.out.println("병원 관리 시스템");
+    System.out.println("나의 목록 관리 시스템");
     System.out.println("----------------------------------");
   }
 
@@ -67,19 +69,19 @@ public class App {
   private void loadData() {
     loadJson("member.json", memberList, Member.class);
     loadJson("board.json", boardList, Board.class);
-    // loadJson("reading.json", readingList, Board.class);
+    loadJson("reading.json", readingList, Board.class);
   }
 
   private void saveData() {
     saveJson("member.json", memberList);
     saveJson("board.json", boardList);
-    // saveJson("reading.json", readingList);
+    saveJson("reading.json", readingList);
   }
 
   private void prepareMenu() {
-    MenuGroup memberMenu = new MenuGroup("환자");
-    memberMenu.add(new Menu("등록", new MemberAddListener(memberList)));
-    memberMenu.add(new Menu("목록", new MemberListListener(memberList)));
+    MenuGroup memberMenu = new MenuGroup("회원");
+    memberMenu.add(new Menu("등록", new MemberAddListener(memberDao)));
+    memberMenu.add(new Menu("목록", new MemberListListener(memberDao)));
     memberMenu.add(new Menu("조회", new MemberDetailListener(memberList)));
     memberMenu.add(new Menu("변경", new MemberUpdateListener(memberList)));
     memberMenu.add(new Menu("삭제", new MemberDeleteListener(memberList)));
@@ -93,13 +95,13 @@ public class App {
     boardMenu.add(new Menu("삭제", new BoardDeleteListener(boardList)));
     mainMenu.add(boardMenu);
 
-    // MenuGroup readingMenu = new MenuGroup("독서록");
-    // readingMenu.add(new Menu("등록", new BoardAddListener(readingList)));
-    // readingMenu.add(new Menu("목록", new BoardListListener(readingList)));
-    // readingMenu.add(new Menu("조회", new BoardDetailListener(readingList)));
-    // readingMenu.add(new Menu("변경", new BoardUpdateListener(readingList)));
-    // readingMenu.add(new Menu("삭제", new BoardDeleteListener(readingList)));
-    // mainMenu.add(readingMenu);
+    MenuGroup readingMenu = new MenuGroup("독서록");
+    readingMenu.add(new Menu("등록", new BoardAddListener(readingList)));
+    readingMenu.add(new Menu("목록", new BoardListListener(readingList)));
+    readingMenu.add(new Menu("조회", new BoardDetailListener(readingList)));
+    readingMenu.add(new Menu("변경", new BoardUpdateListener(readingList)));
+    readingMenu.add(new Menu("삭제", new BoardDeleteListener(readingList)));
+    mainMenu.add(readingMenu);
 
     Menu helloMenu = new Menu("안녕!");
     helloMenu.addActionListener(new HeaderListener());

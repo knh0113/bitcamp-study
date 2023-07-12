@@ -12,8 +12,8 @@ public class Member implements Serializable, CsvObject, AutoIncrement {
 
   private int no;
   private String name;
-  private String age;
-  private String weight;
+  private String email;
+  private String password;
   private char gender;
 
   public Member() {}
@@ -27,8 +27,8 @@ public class Member implements Serializable, CsvObject, AutoIncrement {
 
     Member member = new Member(Integer.parseInt(values[0]));
     member.setName(values[1]);
-    member.setAge(values[2]);
-    member.setWeight(values[3]);
+    member.setEmail(values[2]);
+    member.setPassword(values[3]);
     member.setGender(values[4].charAt(0));
 
     if (Member.userId <= member.getNo()) {
@@ -40,7 +40,11 @@ public class Member implements Serializable, CsvObject, AutoIncrement {
 
   @Override
   public String toCsvString() {
-    return String.format("%d,%s,%s,%s,%c", this.getNo(), this.getAge(), this.getWeight(),
+    return String.format("%d,%s,%s,%s,%c",
+        this.getNo(),
+        this.getName(),
+        this.getEmail(),
+        this.getPassword(),
         this.getGender());
   }
 
@@ -68,39 +72,30 @@ public class Member implements Serializable, CsvObject, AutoIncrement {
   public int getNo() {
     return no;
   }
-
   public void setNo(int no) {
     this.no = no;
   }
-
   public String getName() {
     return name;
   }
-
   public void setName(String name) {
     this.name = name;
   }
-
-  public String getAge() {
-    return age;
+  public String getEmail() {
+    return email;
   }
-
-  public void setAge(String age) {
-    this.age = age;
+  public void setEmail(String email) {
+    this.email = email;
   }
-
-  public String getWeight() {
-    return weight;
+  public String getPassword() {
+    return password;
   }
-
-  public void setWeight(String weight) {
-    this.weight = weight;
+  public void setPassword(String password) {
+    this.password = password;
   }
-
   public char getGender() {
     return gender;
   }
-
   public void setGender(char gender) {
     this.gender = gender;
   }
