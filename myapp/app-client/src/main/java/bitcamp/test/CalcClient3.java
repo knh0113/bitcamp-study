@@ -8,7 +8,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-// Stateless 방식으로 통신하기
+// Stateless 방식 + Session 으로 통신하기
 public class CalcClient3 {
 
   static Pattern pattern = Pattern.compile("[0-9]+|\\p{Punct}");
@@ -32,7 +32,8 @@ public class CalcClient3 {
           continue;
         }
 
-        try (Socket socket = new Socket("localhost", 8888);
+        try (
+            Socket socket = new Socket("localhost", 8888);
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
             DataInputStream in = new DataInputStream(socket.getInputStream())) {
 
@@ -81,5 +82,10 @@ public class CalcClient3 {
     int value;
   }
 }
+
+
+
+
+
 
 

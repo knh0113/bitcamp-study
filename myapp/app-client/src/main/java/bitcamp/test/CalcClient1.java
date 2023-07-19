@@ -14,7 +14,8 @@ public class CalcClient1 {
   static Pattern pattern = Pattern.compile("[0-9]+|\\p{Punct}");
 
   public static void main(String[] args) {
-    try (Socket socket = new Socket("localhost", 8888);
+    try (
+        Socket socket = new Socket("localhost", 8888);
         DataOutputStream out = new DataOutputStream(socket.getOutputStream());
         DataInputStream in = new DataInputStream(socket.getInputStream());
         Scanner keyscan = new Scanner(System.in);) {
@@ -75,5 +76,10 @@ public class CalcClient1 {
     int value;
   }
 }
+
+
+
+
+
 
 

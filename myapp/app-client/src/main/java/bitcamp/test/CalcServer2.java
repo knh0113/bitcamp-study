@@ -19,7 +19,8 @@ public class CalcServer2 {
 
   static void processRequest(Socket socket) {
     InetSocketAddress sockAddr = (InetSocketAddress) socket.getRemoteSocketAddress();
-    System.out.printf("%s(%d) 클라이언트 접속!\n", sockAddr.getHostString(), sockAddr.getPort());
+    System.out.printf("%s(%d) 클라이언트 접속!\n",
+        sockAddr.getHostString(), sockAddr.getPort());
 
     try (Socket s = socket;
         DataInputStream in = new DataInputStream(socket.getInputStream());
@@ -35,31 +36,34 @@ public class CalcServer2 {
       int value = in.readInt();
 
       switch (op) {
-        case "+":
-          result += value;
-          break;
-        case "-":
-          result -= value;
-          break;
-        case "*":
-          result *= value;
-          break;
-        case "/":
-          result /= value;
-          break;
-        case "%":
-          result %= value;
-          break;
-        default:
-          out.writeUTF("지원하지 않는 연산자입니다!");
+        case "+": result += value; break;
+        case "-": result -= value; break;
+        case "*": result *= value; break;
+        case "/": result /= value; break;
+        case "%": result %= value; break;
+        default: out.writeUTF("지원하지 않는 연산자입니다!");
       }
 
       out.writeUTF(String.format("%d", result));
 
     } catch (Exception e) {
-      System.out.printf("%s(%d) 클라이언트 통신 오류!\n", sockAddr.getHostString(), sockAddr.getPort());
+      System.out.printf("%s(%d) 클라이언트 통신 오류!\n",
+          sockAddr.getHostString(), sockAddr.getPort());
     }
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

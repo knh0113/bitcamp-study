@@ -30,7 +30,8 @@ public class CalcClient2 {
           continue;
         }
 
-        try (Socket socket = new Socket("localhost", 8888);
+        try (
+            Socket socket = new Socket("localhost", 8888);
             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
             DataInputStream in = new DataInputStream(socket.getInputStream())) {
 
@@ -77,5 +78,10 @@ public class CalcClient2 {
     int value;
   }
 }
+
+
+
+
+
 
 
