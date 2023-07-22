@@ -24,7 +24,7 @@
 
 ### 3일(5/24, 수)
 - 개발 도구 준비(계속)
-  - 형상관리시스템 소개
+  - 형상관리시스템 소개.  
   - git 사용법 : clone, add, commit, push, pull
   - Gradle 설치 및 사용법 : init, build, run
 - 자바 컴파일러 사용법
