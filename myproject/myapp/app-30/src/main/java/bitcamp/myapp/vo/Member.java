@@ -9,8 +9,8 @@ public class Member {
 
   private int no;
   private String name;
-  private String email;
-  private String password;
+  private String age;
+  private String weight;
   private char gender;
 
   public Member() {

@@ -2,10 +2,10 @@ package bitcamp.myapp;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,7 +32,6 @@ public class App {
 
   ArrayList<Member> memberList = new ArrayList<>();
   LinkedList<Board> boardList = new LinkedList<>();
-
 
   BreadcrumbPrompt prompt = new BreadcrumbPrompt();
 
@@ -62,15 +61,14 @@ public class App {
   }
 
   private void loadData() {
-    loadMember();
-    loadBoard("board.data", boardList);
-
+    loadMember("member.data2", memberList);
+    loadBoard("board.data2", boardList);
   }
 
   private void saveData() {
-    saveMember();
-    saveBoard("board.data", boardList);
- 
+    saveMember("member.data2", memberList);
+    saveBoard("board.data2", boardList);
+
   }
 
   private void prepareMenu() {
@@ -98,26 +96,22 @@ public class App {
     mainMenu.add(helloMenu);
   }
 
-  private void loadMember() {
+  private void loadMember(String filename, List<Member> list) {
     try {
-      FileInputStream in0 = new FileInputStream("member.data");
+      FileInputStream in0 = new FileInputStream(filename);
       BufferedInputStream in1 = new BufferedInputStream(in0); // <== Decorator 역할을 수행!
-      DataInputStream in = new DataInputStream(in1); // <== Decorator 역할을 수행!
+      ObjectInputStream in = new ObjectInputStream(in1); // <== Decorator 역할을 수행!
 
       int size = in.readShort();
 
       for (int i = 0; i < size; i++) {
-        Member member = new Member();
-        member.setNo(in.readInt());
-        member.setName(in.readUTF());
-        member.setAge(in.readUTF());
-        member.setWeight(in.readUTF());
-        member.setGender(in.readChar());
-        memberList.add(member);
+        list.add((Member) in.readObject());
       }
 
-      // 데이터를 로딩한 이후에 추가할 회원의 번호를 설정한다.
-      Member.userId = memberList.get(memberList.size() - 1).getNo() + 1;
+      if (list.size() > 0) {
+        // 데이터를 로딩한 이후에 추가할 회원의 번호를 설정한다.
+        Member.userId = memberList.get(memberList.size() - 1).getNo() + 1;
+      }
 
       in.close();
 
@@ -130,25 +124,19 @@ public class App {
     try {
       FileInputStream in0 = new FileInputStream(filename);
       BufferedInputStream in1 = new BufferedInputStream(in0); // <== Decorator 역할을 수행!
-      DataInputStream in = new DataInputStream(in1); // <== Decorator 역할을 수행!
+      ObjectInputStream in = new ObjectInputStream(in1); // <== Decorator 역할을 수행!
 
       int size = in.readShort();
 
       for (int i = 0; i < size; i++) {
-        Board board = new Board();
-        board.setNo(in.readInt());
-        board.setTitle(in.readUTF());
-        board.setContent(in.readUTF());
-        board.setWriter(in.readUTF());
-        board.setPassword(in.readUTF());
-        board.setViewCount(in.readInt());
-        board.setCreatedDate(in.readLong());
-        list.add(board);
+        list.add((Board) in.readObject());
       }
 
-      Board.boardNo = Math.max(
-          Board.boardNo,
-          list.get(list.size() - 1).getNo() + 1);
+      if (list.size() > 0) {
+        Board.boardNo = Math.max(
+            Board.boardNo,
+            list.get(list.size() - 1).getNo() + 1);
+      }
 
       in.close();
 
@@ -157,20 +145,16 @@ public class App {
     }
   }
 
-  private void saveMember() {
+  private void saveMember(String filename, List<Member> list) {
     try {
-      FileOutputStream out0 = new FileOutputStream("member.data");
+      FileOutputStream out0 = new FileOutputStream(filename);
       BufferedOutputStream out1 = new BufferedOutputStream(out0); // <== Decorator(장식품) 역할 수행!
-      DataOutputStream out = new DataOutputStream(out1); // <== Decorator(장식품) 역할 수행!
+      ObjectOutputStream out = new ObjectOutputStream(out1); // <== Decorator(장식품) 역할 수행!
 
-      out.writeShort(memberList.size());
+      out.writeShort(list.size());
 
-      for (Member member : memberList) {
-        out.writeInt(member.getNo());
-        out.writeUTF(member.getName());
-        out.writeUTF(member.getAge());
-        out.writeUTF(member.getWeight());
-        out.writeChar(member.getGender());
+      for (Member member : list) {
+        out.writeObject(member);
       }
       out.close();
 
@@ -183,18 +167,12 @@ public class App {
     try {
       FileOutputStream out0 = new FileOutputStream(filename);
       BufferedOutputStream out1 = new BufferedOutputStream(out0); // <== Decorator(장식품) 역할 수행!
-      DataOutputStream out = new DataOutputStream(out1); // <== Decorator(장식품) 역할 수행!
+      ObjectOutputStream out = new ObjectOutputStream(out1); // <== Decorator(장식품) 역할 수행!
 
       out.writeShort(list.size());
 
       for (Board board : list) {
-        out.writeInt(board.getNo());
-        out.writeUTF(board.getTitle());
-        out.writeUTF(board.getContent());
-        out.writeUTF(board.getWriter());
-        out.writeUTF(board.getPassword());
-        out.writeInt(board.getViewCount());
-        out.writeLong(board.getCreatedDate());
+        out.writeObject(board);
       }
       out.close();
 
