@@ -28,7 +28,6 @@ public class App {
 
   ArrayList<Member> memberList = new ArrayList<>();
   LinkedList<Board> boardList = new LinkedList<>();
-  LinkedList<Board> readingList = new LinkedList<>();
 
   BreadcrumbPrompt prompt = new BreadcrumbPrompt();
 
@@ -43,7 +42,7 @@ public class App {
   }
 
   static void printTitle() {
-    System.out.println("나의 목록 관리 시스템");
+    System.out.println("병원 관리 시스템");
     System.out.println("----------------------------------");
   }
 
@@ -60,13 +59,11 @@ public class App {
   private void loadData() {
     loadMember();
     loadBoard("board.data", boardList);
-    loadBoard("reading.data", readingList);
   }
 
   private void saveData() {
     saveMember();
     saveBoard("board.data", boardList);
-    saveBoard("reading.data", readingList);
   }
 
   private void prepareMenu() {
@@ -85,14 +82,6 @@ public class App {
     boardMenu.add(new Menu("변경", new BoardUpdateListener(boardList)));
     boardMenu.add(new Menu("삭제", new BoardDeleteListener(boardList)));
     mainMenu.add(boardMenu);
-
-    MenuGroup readingMenu = new MenuGroup("독서록");
-    readingMenu.add(new Menu("등록", new BoardAddListener(readingList)));
-    readingMenu.add(new Menu("목록", new BoardListListener(readingList)));
-    readingMenu.add(new Menu("조회", new BoardDetailListener(readingList)));
-    readingMenu.add(new Menu("변경", new BoardUpdateListener(readingList)));
-    readingMenu.add(new Menu("삭제", new BoardDeleteListener(readingList)));
-    mainMenu.add(readingMenu);
 
     Menu helloMenu = new Menu("안녕!");
     helloMenu.addActionListener(new HeaderListener());
@@ -119,11 +108,11 @@ public class App {
 
         length = in.read() << 8 | in.read();
         in.read(buf, 0, length);
-        member.setEmail(new String(buf, 0, length, "UTF-8"));
+        member.setAge(new String(buf, 0, length, "UTF-8"));
 
         length = in.read() << 8 | in.read();
         in.read(buf, 0, length);
-        member.setPassword(new String(buf, 0, length, "UTF-8"));
+        member.setWeight(new String(buf, 0, length, "UTF-8"));
 
         member.setGender((char)(in.read() << 8 | in.read()));
 
@@ -219,12 +208,12 @@ public class App {
         out.write(bytes);
 
 
-        bytes = member.getEmail().getBytes("UTF-8");
+        bytes = member.getAge().getBytes("UTF-8");
         out.write(bytes.length >> 8);
         out.write(bytes.length);
         out.write(bytes);
 
-        bytes = member.getPassword().getBytes("UTF-8");
+        bytes = member.getWeight().getBytes("UTF-8");
         out.write(bytes.length >> 8);
         out.write(bytes.length);
         out.write(bytes);

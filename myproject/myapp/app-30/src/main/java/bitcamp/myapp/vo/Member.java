@@ -9,8 +9,8 @@ public class Member {
 
   private int no;
   private String name;
-  private String age;
-  private String weigth;
+  private String email;
+  private String password;
   private char gender;
 
   public Member() {
@@ -82,17 +82,17 @@ public class Member {
   public void setName(String name) {
     this.name = name;
   }
-  public String getAge() {
-    return age;
+  public String getEmail() {
+    return email;
   }
-  public void setAge(String age) {
-    this.age = age;
+  public void setEmail(String email) {
+    this.email = email;
   }
-  public String getWeight() {
-    return weight;
+  public String getPassword() {
+    return password;
   }
-  public void setWeight(String weight) {
-    this.weight = weight;
+  public void setPassword(String password) {
+    this.password = password;
   }
   public char getGender() {
     return gender;
