@@ -21,8 +21,8 @@ public class MemberUpdateListener extends AbstractMemberListener {
     }
 
     m.setName(prompt.inputString("이름(%s)? ", m.getName()));
-    m.setAge(prompt.inputString("나이(%s)? ", m.getAge()));
-    m.setWeight(prompt.inputString("몸무게(%s)? ", m.getWeight()));
+    m.setEmail(prompt.inputString("이메일(%s)? ", m.getEmail()));
+    m.setPassword(prompt.inputString("새암호? "));
     m.setGender(inputGender(m.getGender(), prompt));
   }
 

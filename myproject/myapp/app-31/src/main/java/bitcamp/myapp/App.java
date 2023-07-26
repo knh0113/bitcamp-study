@@ -1,14 +1,14 @@
 package bitcamp.myapp;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import bitcamp.io.BufferedInputStream;
-import bitcamp.io.BufferedOutputStream;
-import bitcamp.io.DataInputStream;
-import bitcamp.io.DataOutputStream;
 import bitcamp.myapp.handler.BoardAddListener;
 import bitcamp.myapp.handler.BoardDeleteListener;
 import bitcamp.myapp.handler.BoardDetailListener;
@@ -32,6 +32,7 @@ public class App {
 
   ArrayList<Member> memberList = new ArrayList<>();
   LinkedList<Board> boardList = new LinkedList<>();
+  LinkedList<Board> readingList = new LinkedList<>();
 
   BreadcrumbPrompt prompt = new BreadcrumbPrompt();
 
@@ -46,7 +47,7 @@ public class App {
   }
 
   static void printTitle() {
-    System.out.println("병원 관리 시스템");
+    System.out.println("나의 목록 관리 시스템");
     System.out.println("----------------------------------");
   }
 
@@ -63,11 +64,13 @@ public class App {
   private void loadData() {
     loadMember();
     loadBoard("board.data", boardList);
+    loadBoard("reading.data", readingList);
   }
 
   private void saveData() {
     saveMember();
     saveBoard("board.data", boardList);
+    saveBoard("reading.data", readingList);
   }
 
   private void prepareMenu() {
@@ -86,6 +89,14 @@ public class App {
     boardMenu.add(new Menu("변경", new BoardUpdateListener(boardList)));
     boardMenu.add(new Menu("삭제", new BoardDeleteListener(boardList)));
     mainMenu.add(boardMenu);
+
+    MenuGroup readingMenu = new MenuGroup("독서록");
+    readingMenu.add(new Menu("등록", new BoardAddListener(readingList)));
+    readingMenu.add(new Menu("목록", new BoardListListener(readingList)));
+    readingMenu.add(new Menu("조회", new BoardDetailListener(readingList)));
+    readingMenu.add(new Menu("변경", new BoardUpdateListener(readingList)));
+    readingMenu.add(new Menu("삭제", new BoardDeleteListener(readingList)));
+    mainMenu.add(readingMenu);
 
     Menu helloMenu = new Menu("안녕!");
     helloMenu.addActionListener(new HeaderListener());
@@ -106,8 +117,8 @@ public class App {
         Member member = new Member();
         member.setNo(in.readInt());
         member.setName(in.readUTF());
-        member.setAge(in.readUTF());
-        member.setWeight(in.readUTF());
+        member.setEmail(in.readUTF());
+        member.setPassword(in.readUTF());
         member.setGender(in.readChar());
         memberList.add(member);
       }
@@ -164,8 +175,8 @@ public class App {
       for (Member member : memberList) {
         out.writeInt(member.getNo());
         out.writeUTF(member.getName());
-        out.writeUTF(member.getAge());
-        out.writeUTF(member.getWeight());
+        out.writeUTF(member.getEmail());
+        out.writeUTF(member.getPassword());
         out.writeChar(member.getGender());
       }
       out.close();
