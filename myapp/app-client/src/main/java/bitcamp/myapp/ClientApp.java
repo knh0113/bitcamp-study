@@ -5,7 +5,6 @@ import java.io.DataOutputStream;
 import java.net.Socket;
 import java.util.Scanner;
 import bitcamp.net.NetProtocol;
-import bitcamp.util.Prompt;
 
 public class ClientApp {
 
@@ -27,38 +26,41 @@ public class ClientApp {
     app.execute();
   }
 
-
   public void execute() {
-    try (Prompt prompt = new Prompt();
-        Scanner keyscan = new Scanner(System.in);
+    try (Scanner keyscan = new Scanner(System.in);
         Socket socket = new Socket(this.ip, this.port);
-        DataInputStream in = new DataInputStream(socket.getInputStream());
-        DataOutputStream out = new DataOutputStream(socket.getOutputStream())) {
+        DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+        DataInputStream in = new DataInputStream(socket.getInputStream())) {
 
-
+      System.out.println(in.readUTF());
 
       while (true) {
-        String input = prompt.inputString("> ");
-
-        out.writeUTF(input);
-        if (input.equals("exit")) {
+        String response = in.readUTF();
+        if (response.equals(NetProtocol.RESPONSE_END)) {
+          continue;
+        } else if (response.equals(NetProtocol.PROMPT)) {
+          out.writeUTF(keyscan.nextLine());
+          continue;
+        } else if (response.equals(NetProtocol.NET_END)) {
           break;
         }
-
-        while (true) {
-          String response = in.readUTF();
-          if (response.equals(NetProtocol.RESPONSE_END)) {
-            break;
-          }
-          System.out.println(response);
-        }
+        System.out.print(response);
       }
 
 
     } catch (Exception e) {
       System.out.println("서버 통신 오류!");
-      e.printStackTrace();;
+      e.printStackTrace();
     }
   }
-
 }
+
+
+
+
+
+
+
+
+
+
