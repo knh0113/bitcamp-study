@@ -19,12 +19,12 @@
   - 기계어, os, CPU의 관계
   - 개발 도구 준비.
     - JDK 설치 및 환경 변수 설정
-    - Visual 설치 및 플러그인 설정
+    - Visual 설치 및 플러그인 설정      
     - git 클라이언트 설치  
 
 ### 3일(5/24, 수)
 - 개발 도구 준비(계속)
-  - 형상관리시스템 소개
+  - 형상관리시스템 소개.  
   - git 사용법 : clone, add, commit, push, pull
   - Gradle 설치 및 사용법 : init, build, run
 - 자바 컴파일러 사용법
