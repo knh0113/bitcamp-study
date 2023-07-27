@@ -31,6 +31,7 @@
       b.title,
       b.view_count,
       b.created_date,
+      b.category,
       m.member_no,
       m.name
     from
@@ -48,6 +49,7 @@
       b.content,
       b.view_count,
       b.created_date,
+      b.category,
       m.member_no,
       m.name
     from
@@ -56,6 +58,32 @@
       category=#{categoryNo}
       and board_no=#{boardNo}
   </select>
+  
+  <update id="update" parameterType="bitcamp.myapp.vo.Board">
+	  update myapp_board set
+	    title=#{title},
+	    content=#{content}
+	  where 
+	    category=#{category}
+	    and board_no=#{no}
+	    and writer=#{writer.no}
+  </update>
+  
+  <update id="updateCount" parameterType="bitcamp.myapp.vo.Board">
+    update myapp_board set
+      view_count=#{viewCount}
+    where
+      category=#{category}
+      and board_no=#{no}
+  </update>
+  
+  <delete id="delete" parameterType="bitcamp.myapp.vo.Board">
+    delete from myapp_board
+    where 
+      category=#{category}
+      and board_no=#{no}
+      and writer=#{writer.no}
+  </delete>
 </mapper>
 
 
