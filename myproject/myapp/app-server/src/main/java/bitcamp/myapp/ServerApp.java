@@ -5,14 +5,8 @@ import java.io.DataOutputStream;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import bitcamp.dao.MySQLBoardDao;
-import bitcamp.dao.MySQLMemberDao;
-import bitcamp.myapp.dao.BoardDao;
-import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.handler.BoardAddListener;
 import bitcamp.myapp.handler.BoardDeleteListener;
 import bitcamp.myapp.handler.BoardDetailListener;
@@ -34,9 +28,7 @@ public class ServerApp {
   // 자바 스레드풀 준비
   ExecutorService threadPool = Executors.newFixedThreadPool(10);
 
-  Connection con;
-  MemberDao memberDao;
-  BoardDao boardDao;
+
 
   MenuGroup mainMenu = new MenuGroup("메인");
 
@@ -46,11 +38,7 @@ public class ServerApp {
 
     this.port = port;
 
-    con = DriverManager.getConnection("jdbc:mysql://root:1111@localhost:3306/hosdb" // JDBC URL
-    );
 
-    this.memberDao = new MySQLMemberDao(con);
-    this.boardDao = new MySQLBoardDao(con, 1);
 
     prepareMenu();
   }
