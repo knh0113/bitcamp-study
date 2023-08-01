@@ -20,7 +20,7 @@ public class MemberListListener implements ActionListener {
     prompt.println("번호, 이름, 이메일, 나이, 몸무게, 성별");
     prompt.println("---------------------------------------");
 
-    List<Member> list = memberDao.findAll();
+    List<Member> list = memberDao.list();
     for (Member m : list) {
       prompt.printf("%d, %s, %s, %s, %s, %s\n", m.getNo(), m.getName(), m.getEmail(), m.getAge(),
           m.getWeight(), m.getGender() == 'M' ? "남성" : "여성");
