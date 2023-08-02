@@ -2,33 +2,17 @@ package bitcamp.myapp;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import bitcamp.myapp.dao.BoardDao;
-import bitcamp.myapp.dao.MemberDao;
-import bitcamp.myapp.dao.MySQLBoardDao;
-import bitcamp.myapp.dao.MySQLMemberDao;
-import bitcamp.myapp.handler.BoardAddListener;
-import bitcamp.myapp.handler.BoardDeleteListener;
-import bitcamp.myapp.handler.BoardDetailListener;
-import bitcamp.myapp.handler.BoardListListener;
-import bitcamp.myapp.handler.BoardUpdateListener;
-import bitcamp.myapp.handler.LoginListener;
-import bitcamp.myapp.handler.MemberAddListener;
-import bitcamp.myapp.handler.MemberDeleteListener;
-import bitcamp.myapp.handler.MemberDetailListener;
-import bitcamp.myapp.handler.MemberListListener;
-import bitcamp.myapp.handler.MemberUpdateListener;
+import bitcamp.myapp.config.AppConfig;
 import bitcamp.net.NetProtocol;
+import bitcamp.util.ApplicationContext;
 import bitcamp.util.BreadcrumbPrompt;
-import bitcamp.util.Menu;
+import bitcamp.util.DispatcherListener;
 import bitcamp.util.MenuGroup;
 import bitcamp.util.SqlSessionFactoryProxy;
 
@@ -37,31 +21,17 @@ public class ServerApp {
   // 자바 스레드풀 준비
   ExecutorService threadPool = Executors.newFixedThreadPool(2);
 
-  SqlSessionFactory sqlSessionFactory;
+  MenuGroup mainMenu = new MenuGroup("/", "메인");
 
-  MemberDao memberDao;
-  BoardDao boardDao;
-
-  MenuGroup mainMenu = new MenuGroup("메인");
+  ApplicationContext iocContainer;
+  DispatcherListener facadeListener;
 
   int port;
 
   public ServerApp(int port) throws Exception {
-
     this.port = port;
-
-    // 1) mybatis 설정 파일을 읽어들일 도구를 준비한다.
-    InputStream mybatisConfigIn =
-        Resources.getResourceAsStream("bitcamp/myapp/config/mybatis-config.xml");
-
-    // 2) SqlSessionFactory를 만들어줄 빌더 객체 준비
-    SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
-
-    // 3) 빌더 객체를 통해 SqlSessionFactory를 생성
-    sqlSessionFactory = new SqlSessionFactoryProxy(builder.build(mybatisConfigIn));
-
-    this.memberDao = new MySQLMemberDao(sqlSessionFactory);
-    this.boardDao = new MySQLBoardDao(sqlSessionFactory);
+    iocContainer = new ApplicationContext(AppConfig.class);
+    facadeListener = new DispatcherListener(iocContainer);
 
     prepareMenu();
   }
@@ -100,9 +70,10 @@ public class ServerApp {
       InetSocketAddress clientAddress = (InetSocketAddress) socket.getRemoteSocketAddress();
       System.out.printf("%s 클라이언트 접속함!\n", clientAddress.getHostString());
 
-      out.writeUTF("[나의 목록 관리 시스템]\n" + "-----------------------------------------");
+      out.writeUTF("[병원 관리 시스템]\n" + "-----------------------------------------");
 
-      new LoginListener(memberDao).service(prompt);
+      prompt.setAttribute("menuPath", "login");
+      facadeListener.service(prompt);
 
       mainMenu.execute(prompt);
       out.writeUTF(NetProtocol.NET_END);
@@ -112,31 +83,28 @@ public class ServerApp {
       e.printStackTrace();
 
     } finally {
-      ((SqlSessionFactoryProxy) sqlSessionFactory).clean();
+      SqlSessionFactoryProxy sqlSessionFactoryProxy =
+          (SqlSessionFactoryProxy) iocContainer.getBean(SqlSessionFactory.class);
+      sqlSessionFactoryProxy.clean();
     }
   }
 
   private void prepareMenu() {
-    MenuGroup memberMenu = new MenuGroup("회원");
-    memberMenu.add(new Menu("등록", new MemberAddListener(memberDao, sqlSessionFactory)));
-    memberMenu.add(new Menu("목록", new MemberListListener(memberDao)));
-    memberMenu.add(new Menu("조회", new MemberDetailListener(memberDao)));
-    memberMenu.add(new Menu("변경", new MemberUpdateListener(memberDao, sqlSessionFactory)));
-    memberMenu.add(new Menu("삭제", new MemberDeleteListener(memberDao, sqlSessionFactory)));
+    MenuGroup memberMenu = new MenuGroup("member", "회원");
+    memberMenu.add("member/add", "등록", facadeListener);
+    memberMenu.add("member/list", "목록", facadeListener);
+    memberMenu.add("member/detail", "조회", facadeListener);
+    memberMenu.add("member/update", "변경", facadeListener);
+    memberMenu.add("member/delete", "삭제", facadeListener);
     mainMenu.add(memberMenu);
 
-    MenuGroup boardMenu = new MenuGroup("게시글");
-    boardMenu.add(new Menu("등록", new BoardAddListener(1, boardDao, sqlSessionFactory)));
-    boardMenu.add(new Menu("목록", new BoardListListener(1, boardDao)));
-    boardMenu.add(new Menu("조회", new BoardDetailListener(1, boardDao, sqlSessionFactory)));
-    boardMenu.add(new Menu("변경", new BoardUpdateListener(1, boardDao, sqlSessionFactory)));
-    boardMenu.add(new Menu("삭제", new BoardDeleteListener(1, boardDao, sqlSessionFactory)));
+    MenuGroup boardMenu = new MenuGroup("board", "게시글");
+    boardMenu.add("board/add", "등록", facadeListener);
+    boardMenu.add("board/list", "목록", facadeListener);
+    boardMenu.add("board/detail", "조회", facadeListener);
+    boardMenu.add("board/update", "변경", facadeListener);
+    boardMenu.add("board/delete", "삭제", facadeListener);
     mainMenu.add(boardMenu);
 
-    // Menu helloMenu = new Menu("안녕!");
-    // helloMenu.addActionListener(new HeaderListener());
-    // helloMenu.addActionListener(new HelloListener());
-    // helloMenu.addActionListener(new FooterListener());
-    // mainMenu.add(helloMenu);
   }
 }
