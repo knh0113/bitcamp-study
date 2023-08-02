@@ -9,14 +9,16 @@
     <id     column="member_no"       property="no"/>
     <result column="name"          property="name"/>
     <result column="email"        property="email"/>
+    <result column="age"     property="age"/>
+    <result column="weight"     property="weight"/>
     <result column="password"     property="password"/>
     <result column="gender"       property="gender"/>
     <result column="created_date"   property="createdDate"/>
   </resultMap>
 
   <insert id="insert" parameterType="member">
-    insert into myapp_member(name,email,password,gender)
-    values(#{name},#{email},sha1(#{password}),#{gender})
+    insert into myapp_member(name,email,password,age,weight,gender)
+    values(#{name},#{email},sha1(#{password}),#{age},#{weight},#{gender})
   </insert>
   
   <select id="findAll" resultMap="memberMap">
