@@ -23,7 +23,7 @@ public class SqlSessionFactoryProxy implements SqlSessionFactory {
       sqlSession.close();
       sqlSession.rollback();
       sqlSessionBox.remove();
-      System.out.println("스레드에서 sqlsession 제거!");
+      System.out.println("스레드에서 SqlSession 제거!");
     }
   }
 
@@ -34,11 +34,10 @@ public class SqlSessionFactoryProxy implements SqlSessionFactory {
   public SqlSession openSession(boolean autoCommit) {
     SqlSession sqlSession = sqlSessionBox.get();
     if (sqlSession == null) {
-      sqlSession = original.openSession(false);
+      sqlSession = original.openSession(autoCommit);
       sqlSessionBox.set(sqlSession);
     }
     return sqlSession;
-
   }
 
   public SqlSession openSession(Connection connection) {
