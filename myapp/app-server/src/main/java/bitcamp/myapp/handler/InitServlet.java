@@ -1,48 +1,65 @@
 package bitcamp.myapp.handler;
 
+import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.Servlet;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import bitcamp.myapp.dao.BoardDao;
 import bitcamp.myapp.dao.MemberDao;
-import bitcamp.myapp.vo.Member;
+import bitcamp.myapp.dao.MySQLBoardDao;
+import bitcamp.myapp.dao.MySQLMemberDao;
+import bitcamp.util.AbstractServlet;
+import bitcamp.util.SqlSessionFactoryProxy;
 
-@WebServlet("/init")
-public class InitServlet implements Servlet {
+@WebServlet(
+    value="/init",
+    loadOnStartup = 1
+    )
+public class InitServlet extends AbstractServlet {
 
-  MemberDao memberDao;
+  public static SqlSessionFactory sqlSessionFactory;
+  public static BoardDao boardDao;
+  public static MemberDao memberDao;
 
-  public InitServlet(MemberDao memberDao) {
-    this.memberDao = memberDao;
+  @Override
+  public void init(ServletConfig config) throws ServletException {
+    super.init(config);
+    System.out.println("InitServlet.init() 호출됨!");
+
+    try {
+      sqlSessionFactory = new SqlSessionFactoryProxy(
+          new SqlSessionFactoryBuilder().build(
+              Resources.getResourceAsStream("bitcamp/myapp/config/mybatis-config.xml")));
+
+      boardDao = new MySQLBoardDao(sqlSessionFactory);
+      memberDao = new MySQLMemberDao(sqlSessionFactory);
+
+    } catch (Exception e) {
+      System.out.println("InitServlet.init() 실행 중 오류 발생!");
+      e.printStackTrace();
+    }
   }
 
   @Override
-  public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    Member m = new Member();
-    m.setEmail(request.getParameter("email"));
-    m.setPassword(request.getParameter("password"));
-
-    Member loginUser = memberDao.findByEmailAndPassword(m);
-    if (loginUser != null) {
-      // 로그인 정보를 다른 요청에서도 사용할 있도록 세션 보관소에 담아 둔다.
-      request.getSession().setAttribute("loginUser", loginUser);
-      response.sendRedirect("/");
-      return;
-    }
-
+  public void service(ServletRequest request, ServletResponse response)
+      throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
     out.println("<!DOCTYPE html>");
     out.println("<html>");
     out.println("<head>");
     out.println("<meta charset='UTF-8'>");
-    out.println("<meta http-equiv='refresh' content='1;url=/auth/form.html'>");
-    out.println("<title>로그인</title>");
+    out.println("<title>준비</title>");
     out.println("</head>");
     out.println("<body>");
-    out.println("<h1>로그인</h1>");
-    out.println("<p>회원 정보가 일치하지 않습니다.</p>");
+    out.println("<h1>애플리케이션 준비</h1>");
+    out.println("<p>애플리케이션을 실행할 준비를 완료했습니다!</p>");
     out.println("</body>");
     out.println("</html>");
   }
