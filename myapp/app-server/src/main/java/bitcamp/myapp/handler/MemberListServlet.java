@@ -2,6 +2,7 @@ package bitcamp.myapp.handler;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -11,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import bitcamp.myapp.vo.Member;
 
-@WebServlet("/auth/login")
-public class LoginServlet extends GenericServlet {
+@WebServlet("/member/list")
+public class MemberListServlet extends GenericServlet {
 
   private static final long serialVersionUID = 1L;
 
@@ -23,31 +24,35 @@ public class LoginServlet extends GenericServlet {
     HttpServletRequest request = (HttpServletRequest) req;
     HttpServletResponse response = (HttpServletResponse) res;
 
-    Member m = new Member();
-    m.setEmail(request.getParameter("email"));
-    m.setPassword(request.getParameter("password"));
-
-    Member loginUser = InitServlet.memberDao.findByEmailAndPassword(m);
-    if (loginUser != null) {
-      // 로그인 정보를 다른 요청에서도 사용할 있도록 세션 보관소에 담아 둔다.
-      request.getSession().setAttribute("loginUser", loginUser);
-      response.sendRedirect("/");
-      return;
-    }
-
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
     out.println("<!DOCTYPE html>");
     out.println("<html>");
     out.println("<head>");
     out.println("<meta charset='UTF-8'>");
-    out.println("<meta http-equiv='refresh' content='1;url=/auth/form.html'>");
-    out.println("<title>로그인</title>");
+    out.println("<title>회원</title>");
     out.println("</head>");
     out.println("<body>");
-    out.println("<h1>로그인</h1>");
-    out.println("<p>회원 정보가 일치하지 않습니다.</p>");
+    out.println("<h1>회원 목록</h1>");
+    out.println("<div style='margin:5px;'>");
+    out.println("<a href='/member/form.html'>새 회원</a>");
+    out.println("</div>");
+    out.println("<table border='1'>");
+    out.println("<thead>");
+    out.println("  <tr><th>번호</th> <th>이름</th> <th>이메일</th></tr>");
+    out.println("</thead>");
+
+    List<Member> list = InitServlet.memberDao.findAll();
+    for (Member m : list) {
+      out.printf("<tr>" + " <td>%d</td>" + " <td><a href='/member/detail?no=%d'>%s</a></td>"
+          + " <td>%s</td></tr>\n", m.getNo(), m.getNo(), m.getName(), m.getEmail());
+    }
+
+    out.println("</tbody>");
+    out.println("</table>");
+    out.println("<a href='/'>메인</a>");
     out.println("</body>");
     out.println("</html>");
   }
+
 }

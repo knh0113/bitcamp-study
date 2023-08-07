@@ -1,7 +1,6 @@
 package bitcamp.myapp.handler;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -12,8 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Member;
 
-@WebServlet("/board/add")
-public class BoardAddServlet extends GenericServlet {
+@WebServlet("/board/delete")
+public class BoardDeleteServlet extends GenericServlet {
+
   private static final long serialVersionUID = 1L;
 
   @Override
@@ -31,35 +31,23 @@ public class BoardAddServlet extends GenericServlet {
 
     int category = Integer.parseInt(request.getParameter("category"));
 
-    Board board = new Board();
-    board.setTitle(request.getParameter("title"));
-    board.setContent(request.getParameter("content"));
-    board.setWriter(loginUser);
-    board.setCategory(category);
+    Board b = new Board();
+    b.setNo(Integer.parseInt(request.getParameter("no")));
+    b.setWriter(loginUser);
+    b.setCategory(category);
 
-    response.setContentType("text/html;charset=UTF-8");
-    PrintWriter out = response.getWriter();
-    out.println("<!DOCTYPE html>");
-    out.println("<html>");
-    out.println("<head>");
-    out.println("<meta charset='UTF-8'>");
-    out.printf("<meta http-equiv='refresh' content='1;url=/board/list?category=%d'>\n", category);
-    out.println("<title>게시글</title>");
-    out.println("</head>");
-    out.println("<body>");
-    out.println("<h1>게시글 등록</h1>");
     try {
-      InitServlet.boardDao.insert(board);
+      if (InitServlet.boardDao.delete(b) == 0) {
+        throw new Exception("해당 번호의 게시글이 없거나 삭제 권한이 없습니다.");
+      } else {
+        response.sendRedirect("/board/list?category=" + category);
+      }
       InitServlet.sqlSessionFactory.openSession(false).commit();
-      out.println("<p>등록 성공입니다!</p>");
 
     } catch (Exception e) {
       InitServlet.sqlSessionFactory.openSession(false).rollback();
-      out.println("<p>등록 실패입니다!</p>");
-      e.printStackTrace();
+      throw new RuntimeException(e);
     }
-    out.println("</body>");
-    out.println("</html>");
   }
 }
 

@@ -14,6 +14,8 @@ public class MyServletRequestListener implements ServletRequestListener {
     System.out.println("dfsdf");
   }
 
+
+
   @Override
   public void requestDestroyed(ServletRequestEvent sre) {
     ((SqlSessionFactoryProxy) InitServlet.sqlSessionFactory).clean();

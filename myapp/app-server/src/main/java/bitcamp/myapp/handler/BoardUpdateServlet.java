@@ -12,8 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Member;
 
-@WebServlet("/board/add")
-public class BoardAddServlet extends GenericServlet {
+@WebServlet("/board/update")
+public class BoardUpdateServlet extends GenericServlet {
+
   private static final long serialVersionUID = 1L;
 
   @Override
@@ -32,6 +33,7 @@ public class BoardAddServlet extends GenericServlet {
     int category = Integer.parseInt(request.getParameter("category"));
 
     Board board = new Board();
+    board.setNo(Integer.parseInt(request.getParameter("no")));
     board.setTitle(request.getParameter("title"));
     board.setContent(request.getParameter("content"));
     board.setWriter(loginUser);
@@ -47,15 +49,18 @@ public class BoardAddServlet extends GenericServlet {
     out.println("<title>게시글</title>");
     out.println("</head>");
     out.println("<body>");
-    out.println("<h1>게시글 등록</h1>");
+    out.println("<h1>게시글 변경</h1>");
     try {
-      InitServlet.boardDao.insert(board);
+      if (InitServlet.boardDao.update(board) == 0) {
+        out.println("<p>게시글이 없거나 변경 권한이 없습니다.</p>");
+      } else {
+        out.println("<p>변경했습니다!</p>");
+      }
       InitServlet.sqlSessionFactory.openSession(false).commit();
-      out.println("<p>등록 성공입니다!</p>");
 
     } catch (Exception e) {
       InitServlet.sqlSessionFactory.openSession(false).rollback();
-      out.println("<p>등록 실패입니다!</p>");
+      out.println("<p>게시글 변경 실패입니다!</p>");
       e.printStackTrace();
     }
     out.println("</body>");
