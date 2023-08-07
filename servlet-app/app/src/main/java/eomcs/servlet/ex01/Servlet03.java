@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 // HttpServlet 추상 클래스
 // => javax.servlet.GenericServlet 추상 클래스를 상속 받았다.
@@ -35,7 +36,10 @@ public class Servlet03 extends HttpServlet {
   @Override
   public void service(HttpServletRequest req, HttpServletResponse res)
       throws ServletException, IOException {
-    System.out.println("Servlet03.service(HttpServletRequest,HttpServletResponse)");
+    System.out.println("Servlet03.service() 호출됨!");
+
+    HttpSession session = req.getSession();
+
   }
 }
 
