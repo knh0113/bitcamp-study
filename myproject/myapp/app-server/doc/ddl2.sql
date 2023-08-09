@@ -16,9 +16,10 @@ alter table myapp_board
 create table myapp_member(
   member_no int not null,
   name varchar(20) not null,
+  birth varchar(100) not null,
+  pnum varchar(100) not null,
   email varchar(50) not null,
   password varchar(100) not null,
-  age varchar(100) not null,
   weight varchar(100) not null,
   gender char(1) not null,
   created_date date default (current_date())

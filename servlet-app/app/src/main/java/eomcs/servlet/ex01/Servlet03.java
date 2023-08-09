@@ -17,9 +17,14 @@ public class Servlet03 extends HttpServlet {
       throws ServletException, IOException {
     System.out.println("Servlet03.service() 호출됨!");
 
-    HttpSession session = req.getSession();
+    HttpSession session =  req.getSession();
     resp.sendRedirect("/ex01/s2");
   }
 }
+
+
+
+
+
 
 

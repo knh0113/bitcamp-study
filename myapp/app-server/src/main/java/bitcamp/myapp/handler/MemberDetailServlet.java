@@ -2,25 +2,21 @@ package bitcamp.myapp.handler;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.GenericServlet;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import bitcamp.myapp.vo.Member;
 
 @WebServlet("/member/detail")
-public class MemberDetailServlet extends GenericServlet {
+public class MemberDetailServlet extends HttpServlet {
 
   private static final long serialVersionUID = 1L;
 
   @Override
-  public void service(ServletRequest req, ServletResponse res)
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    HttpServletRequest request = (HttpServletRequest) req;
-    HttpServletResponse response = (HttpServletResponse) res;
 
     Member member = InitServlet.memberDao.findBy(Integer.parseInt(request.getParameter("no")));
 
@@ -30,7 +26,7 @@ public class MemberDetailServlet extends GenericServlet {
     out.println("<html>");
     out.println("<head>");
     out.println("<meta charset='UTF-8'>");
-    out.println("<title>회원</title>");
+    out.println("<title>병원 회원</title>");
     out.println("</head>");
     out.println("<body>");
     out.println("<h1>회원</h1>");
@@ -47,9 +43,18 @@ public class MemberDetailServlet extends GenericServlet {
       out.printf("<tr><th>이름</th>" + " <td><input type='text' name='name' value='%s'></td></tr>\n",
           member.getName());
       out.printf(
+          "<tr><th>생년월일</th>" + " <td><input type='birth' name='birth' value='%s'></td></tr>\n",
+          member.getBirth());
+      out.printf(
+          "<tr><th>전화번호</th>" + " <td><input type='pnum' name='pnum' value='%s'></td></tr>\n",
+          member.getPnum());
+      out.printf(
           "<tr><th>이메일</th>" + " <td><input type='email' name='email' value='%s'></td></tr>\n",
           member.getEmail());
       out.println("<tr><th>암호</th>" + " <td><input type='password' name='password'></td></tr>");
+      out.printf(
+          "<tr><th>몸무게</th>" + " <td><input type='weight' name='weight' value='%s'></td></tr>\n",
+          member.getWeight());
       out.printf(
           "<tr><th>성별</th>\n" + " <td><select name='gender'>\n"
               + " <option value='M' %s>남자</option>\n"

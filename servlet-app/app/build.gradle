@@ -45,7 +45,7 @@ eclipse {
       targetCompatibility = 17
       javaRuntimeName = "JavaSE-17"
     }
-        wtp {
+    wtp {
         facet {
             facet name: 'jst.java', version: '17'
             //facet name: 'jst.web', version: '4.0'
