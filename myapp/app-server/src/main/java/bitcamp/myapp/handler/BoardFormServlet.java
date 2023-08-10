@@ -25,7 +25,7 @@ public class BoardFormServlet extends HttpServlet {
     out.println("<html>");
     out.println("<head>");
     out.println("<meta charset='UTF-8'>");
-    out.println("<title>병원 관리 시스템</title>");
+    out.println("<title>비트캠프</title>");
     out.println("</head>");
     out.println("<body>");
     out.println("<h1>게시글</h1>");

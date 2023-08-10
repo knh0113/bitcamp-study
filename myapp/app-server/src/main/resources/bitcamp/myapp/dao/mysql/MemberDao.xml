@@ -10,30 +10,24 @@
     <result column="name"          property="name"/>
     <result column="email"        property="email"/>
     <result column="password"     property="password"/>
-    <result column="weight"     property="weight"/>
-    <result column="pnum"     property="pnum"/>
-    <result column="birth"     property="birth"/>
     <result column="gender"       property="gender"/>
     <result column="created_date"   property="createdDate"/>
   </resultMap>
 
   <insert id="insert" parameterType="member">
-    insert into myapp_member(name,email,password,weight,pnum,birth,gender)
-    values(#{name},#{email},sha1(#{password}),#{weight},#{pnum},#{birth},#{gender})
+    insert into myapp_member(name,email,password,gender)
+    values(#{name},#{email},sha1(#{password}),#{gender})
   </insert>
   
   <select id="findAll" resultMap="memberMap">
     select
       member_no,
       name,
-      email,
-      weight,
-      pnum,
-      birth
+      email
     from
       myapp_member 
     order by
-      name desc
+      name asc
   </select>
   
   <select id="findBy" parameterType="int" resultMap="memberMap">
@@ -41,9 +35,6 @@
       member_no,
       name,
       email,
-      weight,
-      pnum,
-      birth,
       gender,
       created_date
     from
@@ -67,16 +58,13 @@
   </select>
   
   <update id="update" parameterType="member">
-    update myapp_member set
-      name=#{name},
-      email=#{email},
-      password=sha1(#{password}),
-      weight=#{weight},
-      pnum=#{pnum},
-      birth=#{birth},
-      gender=#{gender}
-    where 
-      member_no=#{no}
+	  update myapp_member set
+	    name=#{name},
+	    email=#{email},
+	    password=sha1(#{password}),
+	    gender=#{gender}
+	  where 
+	    member_no=#{no}
   </update>
   
   <delete id="delete" parameterType="int">

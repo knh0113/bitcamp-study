@@ -28,21 +28,19 @@ public class MemberListServlet extends HttpServlet {
     out.println("<title>회원</title>");
     out.println("</head>");
     out.println("<body>");
-    out.println("<h1>환자 리스트</h1>");
-    out.println("<div style='margin:10px;'>");
-    out.println("<a href='/member/form.html'>fist visit</a>");
+    out.println("<h1>회원 목록</h1>");
+    out.println("<div style='margin:5px;'>");
+    out.println("<a href='/member/form.html'>새 회원</a>");
     out.println("</div>");
     out.println("<table border='1'>");
     out.println("<thead>");
-    out.println("  <tr><th>번호</th> <th>이름</th> <th>생년월일</th> <th>전화번호</th></tr>");
+    out.println("  <tr><th>번호</th> <th>이름</th> <th>이메일</th></tr>");
     out.println("</thead>");
 
     List<Member> list = InitServlet.memberDao.findAll();
     for (Member m : list) {
-      out.printf(
-          "<tr>" + " <td>%d</td>" + " <td><a href='/member/detail?no=%d'>%s</a></td>"
-              + " <td>%s</td>" + " <td>%s</td></tr>\n",
-          m.getNo(), m.getNo(), m.getName(), m.getBirth(), m.getPnum());
+      out.printf("<tr>" + " <td>%d</td>" + " <td><a href='/member/detail?no=%d'>%s</a></td>"
+          + " <td>%s</td></tr>\n", m.getNo(), m.getNo(), m.getName(), m.getEmail());
     }
 
     out.println("</tbody>");
