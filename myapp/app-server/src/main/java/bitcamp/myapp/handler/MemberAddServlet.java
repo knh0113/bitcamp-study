@@ -28,12 +28,12 @@ public class MemberAddServlet extends HttpServlet {
     m.setGender(request.getParameter("gender").charAt(0));
 
     Part photoPart = request.getPart("photo");
-
     if (photoPart.getSize() > 0) {
-      String uploadFileUrl = InitServlet.ncpObjectStorageService.uploadFile("bitcamp-nc7-bucket-20",
-          "member/", photoPart);
+      String uploadFileUrl = InitServlet.ncpObjectStorageService.uploadFile(
+          "bitcamp-nc7-bucket-20", "member/", photoPart);
       m.setPhoto(uploadFileUrl);
     }
+
 
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
