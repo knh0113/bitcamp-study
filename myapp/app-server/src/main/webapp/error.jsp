@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isErrorPage="true"%>
-<%@ page import="org.apache.ibatis.session.SqlSessionFactory"%>
-
+<jsp:useBean id="ncpObjectStorageService" type="bitcamp.util.NcpObjectStorageService" scope="application"/>
 
 <%
+     sqlSessionFactory.openSession(false).rollback();
      if (request.getAttribute("refresh") != null) {
        response.setHeader("Refresh", (String) request.getAttribute("refresh"));
      }

@@ -17,7 +17,7 @@ for (String name : names) {
   out.println("<li>" + name + "</li>");
 }
 %>
-</ul>
+</ul>₩
 </body>
 </html>
 

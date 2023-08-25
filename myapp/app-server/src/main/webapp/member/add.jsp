@@ -4,21 +4,15 @@
     contentType="text/html;charset=UTF-8"
     trimDirectiveWhitespaces="true"
     errorPage="/error.jsp"%>
-<%@ page import="java.io.IOException"%>
-<%@ page import="java.util.ArrayList"%>
-<%@ page import="bitcamp.myapp.dao.BoardDao"%>
-<%@ page import="bitcamp.myapp.vo.MemberDao"%>
 <%@ page import="bitcamp.myapp.vo.Member"%>
-<%@ page import="bitcamp.util.NcpObjectStorageService"%>
-<%@ page import="org.apache.ibatis.session.SqlSessionFactory"%>
 
+
+<jsp:useBean id="memberDao" type="bitcamp.myapp.dao.MemberDao" scope="application"/>
+<jsp:useBean id="sqlSessionFactory" type="org.apache.ibatis.session.SqlSessionFactory" scope="application"/>
+<jsp:useBean id="ncpObjectStorageService" type="bitcamp.util.NcpObjectStorageService" scope="application"/>
 
 <%
     request.setAttribute("refresh", "2;url=list.jsp");
-
-    MemberDao memberDao = (MemberDao) this.getServletContext().getAttribute("memberDao");
-    SqlSessionFactory sqlSessionFactory = (SqlSessionFactory) this.getServletContext().getAttribute("sqlSessionFactory");
-    NcpObjectStorageService ncpObjectStorageService = (NcpObjectStorageService) this.getServletContext().getAttribute("ncpObjectStorageService");
 
     Member m = new Member();
     m.setName(request.getParameter("name"));
