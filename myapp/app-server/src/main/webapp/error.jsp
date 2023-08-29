@@ -1,11 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isErrorPage="true"%>
-<jsp:useBean id="ncpObjectStorageService" type="bitcamp.util.NcpObjectStorageService" scope="application"/>
-
+<%@ page
+    language="java"
+    pageEncoding="UTF-8"
+    contentType="text/html;charset=UTF-8"
+    isErrorPage="true"%>
+<jsp:useBean id="sqlSessionFactory" type="org.apache.ibatis.session.SqlSessionFactory" scope="application"/>
 <%
-     sqlSessionFactory.openSession(false).rollback();
-     if (request.getAttribute("refresh") != null) {
-       response.setHeader("Refresh", (String) request.getAttribute("refresh"));
-     }
+    sqlSessionFactory.openSession(false).rollback();
+    if (request.getAttribute("refresh") != null) {
+      response.setHeader("Refresh", (String) request.getAttribute("refresh"));
+    }
 %>
 
 <!DOCTYPE html>
@@ -20,6 +23,11 @@
 
 <h1>실행 오류!</h1>
 
+<c:if test="${message}"
+    <p>${message}</p>
+</c:if>
+
+<hr>
 <p><%=exception%></p>
 
 <jsp:include page="footer.jsp"/>
