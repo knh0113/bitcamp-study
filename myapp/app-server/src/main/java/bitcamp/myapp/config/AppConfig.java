@@ -11,6 +11,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
@@ -22,6 +23,7 @@ import javax.sql.DataSource;
         "bitcamp.myapp.service"})
 @PropertySource({"classpath:bitcamp/myapp/config/ncloud/jdbc.properties"})
 @MapperScan("bitcamp.myapp.dao") // Mybatis가 자동으로 생성할 DAO 객체의 인터페이스 패키지 지정
+@EnableTransactionManagement // @Transactional 애노테이션을 처리할 객체 등록
 public class AppConfig {
 
   public AppConfig() {
