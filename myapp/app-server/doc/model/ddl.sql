@@ -34,7 +34,7 @@ DROP TABLE IF EXISTS edu_lect_teacher RESTRICT;
 -- 회원
 DROP TABLE IF EXISTS edu_member RESTRICT;
 
--- 고용형태
+-- 임시 테이블
 DROP TABLE IF EXISTS edu_employ_type RESTRICT;
 
 -- 수강신청
@@ -67,7 +67,7 @@ CREATE TABLE edu_lect (
   edt     DATE         NOT NULL COMMENT '종료일', -- 종료일
   price   INTEGER      NOT NULL COMMENT '수강료', -- 수강료
   crno    INTEGER      NULL     COMMENT '강의실번호', -- 강의실번호
-  mrno    INTEGER      NULL     COMMENT '매니저번호' -- 매니저번호
+  mno     INTEGER      NULL     COMMENT '매니저번호' -- 매니저번호
 )
 COMMENT '강의';
 
@@ -94,7 +94,7 @@ CREATE TABLE edu_student (
   bas_addr VARCHAR(255) NOT NULL COMMENT '기본주소', -- 기본주소
   det_addr VARCHAR(255) NULL     COMMENT '상세주소', -- 상세주소
   dno      INTEGER      NOT NULL COMMENT '학력번호', -- 학력번호
-  school   VARCHAR(60)  NULL     COMMENT '최종학교', -- 최종학교
+  school   VARCHAR(60)  NULL     COMMENT '최종학력', -- 최종학력
   major    VARCHAR(60)  NULL     COMMENT '전공', -- 전공
   bno      INTEGER      NOT NULL COMMENT '은행번호', -- 은행번호
   acc_no   VARCHAR(20)  NOT NULL COMMENT '계좌번호', -- 계좌번호
@@ -139,8 +139,8 @@ ALTER TABLE edu_classroom
 CREATE TABLE edu_center (
   cno      INTEGER      NOT NULL COMMENT '교육센터번호', -- 교육센터번호
   name     VARCHAR(60)  NOT NULL COMMENT '교육센터', -- 교육센터
-  post_no  VARCHAR(10)  NOT NULL COMMENT '우편번호', -- 우편번호
-  bas_addr VARCHAR(255) NOT NULL COMMENT '기본주소', -- 기본주소
+  post_no  VARCHAR(10)  NULL     COMMENT '우편번호', -- 우편번호
+  bas_addr VARCHAR(255) NULL     COMMENT '기본주소', -- 기본주소
   det_addr VARCHAR(255) NULL     COMMENT '상세주소', -- 상세주소
   tel      VARCHAR(30)  NOT NULL COMMENT '대표번호', -- 대표번호
   fax      VARCHAR(30)  NULL     COMMENT '대표팩스' -- 대표팩스
@@ -211,7 +211,7 @@ ALTER TABLE edu_bank
 
 -- 강의실사진
 CREATE TABLE edu_classroom_photo (
-  cpno     INTEGER      NOT NULL COMMENT '강의실사진번호', -- 강의실사진번호
+  cpno     INTEGER      NOT NULL COMMENT '강의실 사진번호', -- 강의실 사진번호
   crno     INTEGER      NOT NULL COMMENT '강의실번호', -- 강의실번호
   filename VARCHAR(255) NOT NULL COMMENT '사진파일명' -- 사진파일명
 )
@@ -221,11 +221,11 @@ COMMENT '강의실사진';
 ALTER TABLE edu_classroom_photo
   ADD CONSTRAINT PK_edu_classroom_photo -- 강의실사진 기본키
   PRIMARY KEY (
-  cpno -- 강의실사진번호
+  cpno -- 강의실 사진번호
   );
 
 ALTER TABLE edu_classroom_photo
-  MODIFY COLUMN cpno INTEGER NOT NULL AUTO_INCREMENT COMMENT '강의실사진번호';
+  MODIFY COLUMN cpno INTEGER NOT NULL AUTO_INCREMENT COMMENT '강의실 사진번호';
 
 -- 강사
 CREATE TABLE edu_teacher (
@@ -247,7 +247,7 @@ ALTER TABLE edu_teacher
 
 -- 매니저
 CREATE TABLE edu_manager (
-  mrno INTEGER     NOT NULL COMMENT '매니저번호', -- 매니저번호
+  mno  INTEGER     NOT NULL COMMENT '매니저번호', -- 매니저번호
   dept VARCHAR(60) NULL     COMMENT '부서', -- 부서
   posi VARCHAR(60) NULL     COMMENT '직위' -- 직위
 )
@@ -257,8 +257,11 @@ COMMENT '매니저';
 ALTER TABLE edu_manager
   ADD CONSTRAINT PK_edu_manager -- 매니저 기본키
   PRIMARY KEY (
-  mrno -- 매니저번호
+  mno -- 매니저번호
   );
+
+ALTER TABLE edu_manager
+  MODIFY COLUMN mno INTEGER NOT NULL AUTO_INCREMENT COMMENT '매니저번호';
 
 -- 강의배정
 CREATE TABLE edu_lect_teacher (
@@ -309,19 +312,16 @@ CREATE INDEX IX_edu_member2
     tel ASC -- 전화
   );
 
-ALTER TABLE edu_member
-  MODIFY COLUMN mno INTEGER NOT NULL AUTO_INCREMENT COMMENT '회원번호';
-
--- 고용형태
+-- 임시 테이블
 CREATE TABLE edu_employ_type (
   etno  INTEGER     NOT NULL COMMENT '고용형태번호', -- 고용형태번호
-  title VARCHAR(60) NOT NULL COMMENT '고용형태명' -- 고용형태명
+  title VARCHAR(60) NOT NULL COMMENT '고용형태' -- 고용형태
 )
-COMMENT '고용형태';
+COMMENT '임시 테이블';
 
--- 고용형태
+-- 임시 테이블
 ALTER TABLE edu_employ_type
-  ADD CONSTRAINT PK_edu_employ_type -- 고용형태 기본키
+  ADD CONSTRAINT PK_edu_employ_type -- 임시 테이블 기본키
   PRIMARY KEY (
   etno -- 고용형태번호
   );
@@ -363,10 +363,10 @@ ALTER TABLE edu_lect
 ALTER TABLE edu_lect
   ADD CONSTRAINT FK_edu_manager_TO_edu_lect -- 매니저 -> 강의
   FOREIGN KEY (
-  mrno -- 매니저번호
+  mno -- 매니저번호
   )
   REFERENCES edu_manager ( -- 매니저
-  mrno -- 매니저번호
+  mno -- 매니저번호
   );
 
 -- 학생
@@ -441,11 +441,11 @@ ALTER TABLE edu_teacher
 
 -- 강사
 ALTER TABLE edu_teacher
-  ADD CONSTRAINT FK_edu_employ_type_TO_edu_teacher -- 고용형태 -> 강사
+  ADD CONSTRAINT FK_edu_employ_type_TO_edu_teacher -- 임시 테이블 -> 강사
   FOREIGN KEY (
   etno -- 고용형태번호
   )
-  REFERENCES edu_employ_type ( -- 고용형태
+  REFERENCES edu_employ_type ( -- 임시 테이블
   etno -- 고용형태번호
   );
 
@@ -453,20 +453,10 @@ ALTER TABLE edu_teacher
 ALTER TABLE edu_manager
   ADD CONSTRAINT FK_edu_member_TO_edu_manager -- 회원 -> 매니저
   FOREIGN KEY (
-  mrno -- 매니저번호
+  mno -- 매니저번호
   )
   REFERENCES edu_member ( -- 회원
   mno -- 회원번호
-  );
-
--- 강의배정
-ALTER TABLE edu_lect_teacher
-  ADD CONSTRAINT FK_edu_lect_TO_edu_lect_teacher -- 강의 -> 강의배정
-  FOREIGN KEY (
-  lno -- 강의번호
-  )
-  REFERENCES edu_lect ( -- 강의
-  lno -- 강의번호
   );
 
 -- 강의배정
@@ -477,4 +467,14 @@ ALTER TABLE edu_lect_teacher
   )
   REFERENCES edu_teacher ( -- 강사
   tno -- 강사번호
+  );
+
+-- 강의배정
+ALTER TABLE edu_lect_teacher
+  ADD CONSTRAINT FK_edu_lect_TO_edu_lect_teacher -- 강의 -> 강의배정
+  FOREIGN KEY (
+  lno -- 강의번호
+  )
+  REFERENCES edu_lect ( -- 강의
+  lno -- 강의번호
   );

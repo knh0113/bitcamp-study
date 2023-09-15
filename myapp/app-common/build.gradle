@@ -9,7 +9,7 @@ repositories {
 
 dependencies {
 
-    // Mybatis 라이브러리  
+    // Mybatis 라이브러리
     implementation 'org.mybatis:mybatis:3.5.13'
 
     // Mybatis의 Spring 연동 라이브러리
